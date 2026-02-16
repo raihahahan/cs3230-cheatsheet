@@ -372,25 +372,77 @@ $\omega$ \textbf{(g is strict lower bound of f)}: $f \in \omega(g(n))$
     \item Termination: New element inserted is bigger than that already inserted, thus sorted.
 \end{enumerate}
 \vspace{8pt}
-\textbf{Weighted Directed Graphs} \\
+\textbf{Dijkstra} \\
 \textbf{Definitions}
-\begin{itemize}
-    \item $s$: Source vertex; $R$: Correct computed distances; $dist(u, v)$: Distance; $w(u, v)$: Edge cost; $V$: All vertices; $D_v = \{\forall u \in R : d(u) + w(u, v)\}$; $d(v) = \min(D_v)$.
-\end{itemize}
+\begin{enumerate}
+    \item $s$: Source vertex
+    \item $R$: Set of already correct computed distances
+    \item $dist(u, v)$: Distance from $u$ to $v$
+    \item $w(u, v)$: Edge cost from $u$ to $v$
+    \item $V$: Set of all vertices
+    \item $D_v$: Set of all possible path distances from $s$ to $v$ 
+        \begin{itemize}
+            \item i.e $D_v = \{\forall u \in R : d(u) + w(u, v)\}$
+        \end{itemize}
+    \item $d(v)$: $min(D_v)$
+\end{enumerate}
 \vspace{8pt}
 \textbf{Algorithm}
 \begin{enumerate}
-    \item Base case: $dist(s,s) = 0, R = \{s\}$
-    \item While $R \neq V$: Select $v \notin R$ minimising $D_v$, update $d(v) = \min(D_v)$, add $v$ to $R$.
+    \item Base case: $dist(s,s) = 0$, $R = \{s\}$
+    \item Loop: While $R \neq V$:
+        \begin{enumerate}
+            \item Select $v \in V$ such that $v$ is not in $R$ and $v$ minimises $D_v$
+            \item Update $d(v) = min(D_v)$
+            \item Add $v$ to $R$
+        \end{enumerate}
 \end{enumerate}
 \vspace{8pt}
-\textbf{Loop invariant}: $\forall u \in R, dist(s, v) = \min(D_v)$
+\textbf{Loop invariant}: At the start of every iteration, $\forall u \in R, dist(s, v) = min(D_v)$
 \vspace{8pt} \\
-\textbf{Proof of correctness}
+\textbf{Proof of correctness of the loop invariant}
 \begin{enumerate}
     \item Initialisation: $dist(s, s) = d(s) = 0$
-    \item Termination: All vertices in $R$, representing shortest paths.
-    \item Maintenance: Shortest path $P$ from $s$ to $v$. Claim: Every vertex in $P$ is in $R$ except $v$. If false, there's $x$ before $v$ not in $R$. But then $\min(D_v) \geq dist(s, v) > min(D_x)$, so $x$ would've been picked first. Contradiction.
+    \item Termination: 
+        \begin{enumerate}
+            \item At the termination point, in each iteration of the while loop, we add one extra vertex to R
+            \item Every vertex $u \in R = d(u)$, and $R = V$ at the end of the computation (i.e every vertex has the shortest distance from $s$ computed correctly)
+            \item So at the end of the algorithm, all the vertices will be in $R$ and $R$ represents the shortest path from $s$ to every other vertices at termination
+        \end{enumerate}
+    \item Maintenance (i.e how each loop iteration maintains the invariant)
+        \begin{enumerate}
+            \item At the start of the loop iteration, the algorithm chooses a new vertex $v$ to add to $R$ such that $min(D_v)$ is minimised (step 2.1 in the algorithm) (now to prove that this maintains the invariant)
+            \item Consider the shortest path $P$ from $s$ to $v$. 
+                \begin{itemize}
+                    \item Visual: $s \rightarrow \dots \rightarrow y \rightarrow v$
+                \end{itemize}
+            \item Claim: Every vertex in $P$ is in $R$ except for $v$ 
+                \begin{itemize}
+                    \item Visual: $(s \rightarrow \dots \rightarrow y) \rightarrow v$
+                    \item Need to prove that this claim is true, because if this claim is true, then it follows that the loop invariant is maintained (i.e $dist(s,v) = d(v)$)
+                \end{itemize}
+            \item Suppose the claim (3.3) is false:
+                \begin{enumerate}
+                    \item Then there exists a vertex $x$ before $v$ and immediately after $y$
+                        \begin{itemize}
+                            \item Visual: $(s \rightarrow \dots \rightarrow y) \rightarrow x \rightarrow \dots \rightarrow v$
+                        \end{itemize}
+                    \item The true shortest path from $s$ to $v$ = $dist(s, v)$ is in $D_v$. So $min(D_v) \geq dist(s,v)$
+                    \item From the visual 3.4.1.1, we have $dist(s, v) > dist(s, y) + w(y, x)$
+                    \item Since $y$ is in $R$, $dist(s,y) = min(D_y)$ 
+                    \item $dist(s, y) + w(y, x) = min(D_y) + w(y, x) \geq min(D_x)$
+                    \item Full inequality: $min(D_v) \geq dist(s,v) > dist(s,y) + w(y,x) \geq min(D_x)$ 
+                    \item Which implies $min(D_v) \geq min(D_x)$
+                    \item So the algorithm would've selected $x$ instead of $v$. This contradicts (3.1).
+                \end{enumerate}
+            \item Thus, the claim (3.3) must be true, which implies:
+                \begin{enumerate}
+                    \item $min(D_v) \geq dist(s, v) = d(y) + w(y, v) \geq min(D_v)$
+                    \item $dist(d, v) = min(D_v)$
+                    \item Visual: $(s \rightarrow \dots \rightarrow y) \rightarrow v$
+                \end{enumerate}
+            \item Thus, the loop invariant is satisfied ($\forall u \in R, dist(s, u) = min(D_u)$)
+        \end{enumerate}
 \end{enumerate}
 \vspace{8pt}
 \textbf{Efficiency of Djikstra}
