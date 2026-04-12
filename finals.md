@@ -1157,6 +1157,7 @@ Conversion:
 - For decision problems, the YES/NO answer is simply "copied" through the reduction
 - We show $\alpha$ and $\beta$ are equivalent (same YES/NO answer), but this does not mean $A$ and $B$ are equivalent as problems
 ##### **3-SAT**
+![[Screenshot 2026-03-29 at 12.02.00 PM.png]]
 - **Literal:** a boolean variable $x_i$ or its negation $\overline{x_i}$
 - **Clause:** a disjunction (OR) of literals, e.g. $C_j = x_1 \lor \overline{x_2} \lor x_3$
 - **CNF:** a conjunction (AND) of clauses: $\Phi = C_1 \land C_2 \land \dots \land C_k$
@@ -1191,6 +1192,8 @@ Conversion:
 > - Intra-clause edges force at most one vertex per clause. Since $|S| = k$ and there are $k$ clauses, exactly one vertex per clause.
 > - Inter-clause edges ensure no two selected literals are negations. So setting all selected literals to true is consistent.
 > - One true literal per clause means every clause is satisfied, so $\phi$ is satisfiable.
+
+![[Screenshot 2026-03-29 at 4.53.29 PM.png]]
 
 > [!NOTE] **Independent-Set $\le_P$ Vertex-Cover**
 > 
@@ -1321,6 +1324,36 @@ Conversion:
 >     2. $(\Rightarrow)$: if $G$ has an independent set of size $k$, no edge between any pair of these vertices. Therefore there is an edge between each pair in $\bar{G}$ $\Rightarrow$ clique of size $k$ in $\bar{G}$.
 >     3. $(\Leftarrow)$: if $\bar{G}$ has a clique of size $k$, there is an edge between each pair of these vertices in $\bar{G}$. Therefore no edge between any pair in $G$ $\Rightarrow$ independent set of size $k$ in $G$.
 
+**Find-Family is NP-Complete**
+> [!NOTE]
+> - **Bipartite graph** $G = (L \cup R, E)$: two disjoint vertex sets $L$ and $R$, every edge has one endpoint in $L$ and one in $R$.
+> - **Siblings**: a pair $u, v \in L$ are siblings if $\exists r \in R$ such that both $(u, r)$ and $(r, v)$ are edges (i.e., $u$ and $v$ share a common neighbour in $R$).
+> - **Family**: a subset $F \subseteq L$ such that for all distinct $u, v \in F$, $u$ and $v$ are siblings. Intuitively, every pair in $F$ must share at least one common right-neighbour.
+>
+> - **Find-Family**: given bipartite graph $G = (L \cup R, E)$ and integer $k$, is there a family of size $\geq k$?
+> **Example**: $L = {0, 2, 4}$, $R = {1, 3}$. Edges: $(0,1), (2,1), (2,3), (4,3)$. Here 0 and 2 are siblings (share $r=1$), 2 and 4 are siblings (share $r=3$), but ${0, 2, 4}$ is not a family since 0 and 4 are not siblings (share no common $r$).
+> 
+> - Step 1 (in NP): certificate is the subset $F \subseteq L$ with $|F| \geq k$. Verifier checks for every pair $u, v \in F$ whether $\exists r \in R$ adjacent to both. Polynomial time. Hence Find-Family is in NP.
+> - Step 2 (NP-Hard): reduce from Clique.
+> 
+> **Reduction: Clique $\leq_P$ Find-Family**
+> 
+> **Construction**: given instance $(G = (V, E), k)$ of Clique, construct bipartite graph $G' = (L \cup R, E')$:
+> 
+> - $L = V$ (left vertices are original graph vertices)
+> - $R = {r_e : e \in E}$ (one right vertex per edge of $G$)
+> - For each edge $e = {u, v} \in E$, add bipartite edges $(u, r_e)$ and $(v, r_e)$
+> 
+> **Key observation**: two vertices $u, v \in L$ are siblings in $G'$ iff ${u, v} \in E$ in $G$. The right vertex $r_{{u,v}}$ is adjacent to both iff ${u,v}$ was an original edge. So a family in $G'$ is exactly a clique in $G$.
+> 
+> **Proof:**
+> 
+> 1. Reduction runs in poly-time: $|L| = |V|$, $|R| = |E|$, construction is $O(|V| + |E|)$.
+> 2. $(\Rightarrow)$: suppose $C \subseteq V$ is a clique of size $\geq k$. For every distinct $u, v \in C$, edge ${u,v} \in E$, so $r_{{u,v}} \in R$ is adjacent to both $u$ and $v$ $\Rightarrow$ $u$ and $v$ are siblings. This holds for all pairs in $C$, so $C$ is a family of size $\geq k$ in $G'$.
+> 3. $(\Leftarrow)$: suppose $F \subseteq L$ is a family of size $\geq k$. For every distinct $u, v \in F$, $\exists r_e \in R$ adjacent to both. By construction, this is only possible if $e = {u, v} \in E$. So every pair in $F$ is adjacent in $G$ $\Rightarrow$ $F$ is a clique of size $\geq k$ in $G$.
+> 
+> Hence Clique $\leq_P$ Find-Family. Since Clique is NP-Complete, Find-Family is NP-Hard. Combined with Step 1, Find-Family is NP-Complete.
+
 **Directed Ham-Cycle is NP-Complete**
 > [!NOTE]
 > - Problem: given a directed graph $G$, decide whether there is a simple cycle visiting each vertex once.
@@ -1404,6 +1437,61 @@ Conversion:
 > - $(\Rightarrow)$: if Partition is YES, $\exists$ subset of ${x_1, \ldots, x_n}$ summing to $X/2$. Put those doubled values plus one copy of $X+1$ into $S$. Both size and sum conditions of Partition-Special are met.
 > - $(\Leftarrow)$: if Partition-Special is YES for $I'$, by above the two $X+1$ elements are split, and $\sum_{i \in S, i \leq n} x_i = X/2$. So the original $x_i$ are partitioned with equal sum. Partition is YES.
 > - Reduction runs in poly-time ($O(n)$ construction).
+
+**Subset-Sum is NP-complete (using 3-SAT)**
+> [!NOTE]
+> **Step 1: Find a reduction**
+> We reduce from 3-SAT. Given a 3-CNF formula with variables $x_1, \dots, x_n$ and clauses $C_1, \dots, C_m$, construct a SUBSET-SUM instance as follows:
+> - For each variable $x_i$, create two numbers $t_i$ and $f_i$, each with $n + m$ digits.
+> - In variable position $i$: both $t_i$ and $f_i$ have digit 1; all other variable positions are 0.
+> - In clause position $j$: $t_i$ has digit 1 iff $x_i \in C_j$; $f_i$ has digit 1 iff $\neg x_i \in C_j$.
+> - For each clause $C_j$, add slack numbers $s_j$ and $u_j$ with digits 1 and 2 respectively, only in clause position $j$.
+> - Set target $W$ with digit 1 in each variable position and digit 4 in each clause position:
+> 
+> $$W = \underbrace{11\cdots1}_{n}\underbrace{44\cdots4}_{m}$$
+> 
+> **Step 2: Show the reduction runs in polynomial time**
+> We construct $2n$ variable numbers and $2m$ slack numbers, each with $n + m$ digits. The total size of the instance is $O((n + m)^2)$, which is polynomial in the size of the formula.
+> 
+> **Step 3: 3-SAT YES-instance $\implies$ SUBSET-SUM YES-instance**
+> Suppose the formula is satisfiable. Fix a satisfying assignment. For each variable $x_i$, choose $t_i$ if $x_i = \text{true}$, and $f_i$ if $x_i = \text{false}$.
+> - **Variable columns:** since exactly one of $t_i, f_i$ is chosen per variable, and both have digit 1 in variable position $i$, each variable column sums to exactly 1. $\checkmark$
+> - **Clause columns:** since the assignment satisfies every clause $C_j$, at least one chosen variable-number contributes a 1 to clause column $j$. The contribution is therefore 1, 2, or 3. We can always choose slack numbers $s_j$ and $u_j$ (with values 1 and 2 in column $j$) to top up the total to exactly 4. $\checkmark$
+> 
+> So the subset sums to $W$, and the SUBSET-SUM instance is a YES-instance.
+> 
+> **Step 4: SUBSET-SUM YES-instance $\implies$ 3-SAT YES-instance**
+> Suppose there exists a subset summing to $W$.
+> - **Variable columns:** the target digit is 1 in each variable position $i$, and only $t_i$ and $f_i$ contribute to that column. So exactly one of $t_i, f_i$ must be chosen. This defines a valid truth assignment: set $x_i = \text{true}$ if $t_i$ is chosen, $x_i = \text{false}$ if $f_i$ is chosen.
+> - **Clause columns:** the target digit is 4 in each clause position $j$. The slack numbers contribute at most $1 + 2 = 3$ to column $j$, so the chosen variable-numbers must contribute at least 1. This means at least one chosen variable-number has a 1 in clause column $j$, which means the corresponding literal satisfies $C_j$. So every clause is satisfied. $\checkmark$
+> 
+> Therefore the truth assignment satisfies the formula, and the 3-SAT instance is a YES-instance.
+> **Conclusion:** Since $\text{3-SAT} \leq_p \text{SUBSET-SUM}$ and 3-SAT is NP-hard, SUBSET-SUM is NP-hard. $\blacksquare$
+> 
+> **Example**
+> Take $(x_1 \vee \neg x_2 \vee x_3) \wedge (\neg x_1 \vee x_2 \vee x_3)$.
+> There are 3 variable columns and 2 clause columns, so every number has 5 digits: $[x_1\ x_2\ x_3\ C_1\ C_2]$.
+> 
+> |Number|Digits|Reason|
+> |---|---|---|
+> |$t_1$|$10010$|$x_1$ appears in $C_1$|
+> |$f_1$|$10001$|$\neg x_1$ appears in $C_2$|
+> |$t_2$|$01001$|$x_2$ appears in $C_2$|
+> |$f_2$|$01010$|$\neg x_2$ appears in $C_1$|
+> |$t_3$|$00111$|$x_3$ appears in both clauses|
+> |$f_3$|$00100$|$\neg x_3$ appears nowhere|
+> |$s_1$|$00010$|slack for $C_1$|
+> |$u_1$|$00020$|slack for $C_1$|
+> |$s_2$|$00001$|slack for $C_2$|
+> |$u_2$|$00002$|slack for $C_2$|
+> |$W$|$11144$|target|
+> 
+> Try assignment $x_1 = x_2 = x_3 = \text{true}$, choosing $t_1, t_2, t_3$:
+> $t_1 + t_2 + t_3 = 10010 + 01001 + 00111 = 11122$
+> Add slack $u_1 + u_2 = 00020 + 00002 = 00022$:
+> 
+> $11122 + 00022 = 11144 = W \checkmark$
+> 
 
 **Key takeaways**
 - To prove NP-Completeness: (1) show in NP via certificate + poly-time verifier, (2) reduce from known NP-Complete problem with poly-time reduction preserving YES/NO.
