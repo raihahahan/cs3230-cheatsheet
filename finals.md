@@ -1,11 +1,86 @@
+#### Index of problems in this cheatsheet
+1. Proof of correctness
+	1. Iterative
+		1. Fibonacci
+		2. Selection Sort
+		3. Weighted Directed Graphs (Dijkstra)
+		4. Insertion Sort
+	2. Recursive (Divide and Conquer)
+		1. Searching in a sorted array
+		2. Exponentiation
+		3. StoogeSort
+		4. PeakFinding
+		5. Karatsuba Multiplication
+		6. H-Index
+		7. Ball Weighing Problem
+2. Sorting
+	1. Comparison-Based
+		1. Merge k-sorted Arrays
+		2. Quick Sort
+	2. Non-Comparison
+		1. Counting Sort
+		2. Radix Sort
+3. Randomized Algorithms
+	1. Verification of Matrix Multiplication (Freivald)
+	2. Coupon Collector / Balls and Bins
+	3. Hashing (expected number of items per bucket)
+	4. Randomized Quick Sort
+	5. Randomized Equality Testing (Communication Protocol)
+	6. Random Graph Partition (Max-Cut)
+	7. Random Walk on 4-Point Circle
+	8. Independent Set Lower Bound
+	9. Expected Input Length (Weighted Geometric Series)
+4. Dynamic Programming
+	1. Fibonacci
+	2. Longest Common Subsequence
+	3. Knapsack
+	4. Coin Change
+	5. Convex Polygon Triangulation
+	6. Min Difference |Sx - 2Sy| (Subset sum variant)
+	7. Max Sum, No Two adjacent (House Robber)
+	8. Knapsack with Item Count Cap
+5. Greedy
+	1. Semi-Fractional Knapsack
+	2. Minimum Spanning Trees
+	3. Huffman Code
+	4. Burning CDs
+	5. Activity Selection
+6. Amortized Analysis
+	1. Binary Counter (k-bit increment)
+	2. Queue
+	3. Dynamic Table
+	4. Union-Find (DSU)
+7. Reductions and Intractability I
+	1. Matrix Squaring $\leq_p$ Matrix Multiplication
+	2. 3-SAT $\leq_p$ Independent Set
+	3. Independent Set $\leq_p$ Vertex-Cover
+	4. Vertex-Cover $\leq_p$ Set-Cover
+	5. Partition $\leq_p$ Knapsack
+	6. Partition $\nleq_p$ Ball-Partition
+	7. Hamiltonian Cycle $\leq_p$ Travelling Salesman Problem
+8. Reductions and Intractability II
+	1. Subset-Sum is NP-Complete (3-SAT $\leq_P$ Subset-Sum)
+	2. Hamiltonian Cycle is NP-Complete (Directed Hamiltonian Cycle $\leq_P$ Ham-Cycle)
+	3. Clique is NP-Complete (Independent-Set $\leq_P$ Clique)
+	4. Find-Family is NP-Complete (Clique $\leq_P$ Find-Family)
+	5. Directed Hamiltonian Cycle is NP-Complete (3-SAT $\leq_P$ Directed-Ham-Cycle)
+	6. Fantastic-Half is NP-Complete (Partition-Special $\leq_P$ Fantastic-Half)
+	7. Partition-Special is NP-Complete (Partition $\leq_P$ Partition-Special)
+	8. Subset-Sum is NP-Complete (3-SAT $\leq_P$ Subset-Sum)
+	9. Subgraph Isomorphism is NP-Complete
+	10. Half-Clique is NP-Complete
+9. Approximation using Greedy
+	1. Set-Cover
+	2. Matching (Maximal Matching)
+	3. Vertex-Cover
+
 #### 0. Math and Probability
-**Exponentials**
+##### **Exponentials**
 *   $a^{-1} = \frac{1}{a}$
 *   $(a^m)^n = a^{mn}$
 *   $a^m a^n = a^{m+n}$
 *   $e^x \ge 1 + x$
-
-**Logarithms**
+##### **Logarithms**
 *   **Binary log:** $\log n = \log_2 n$
 *   **Natural log:** $\ln n = \log_e n$
 *   **Exponentiation:** $\log^k n = (\log n)^k$
@@ -18,13 +93,11 @@
 *   $\log_b a = \frac{1}{\log_a b}$
 *   $a^{\log_b c} = c^{\log_b a}$
 * $a^b=e^{b\ln{a}}$
-
-**Stirling's approximation**
+##### **Stirling's approximation**
 - Estimate for the factorial function
 - $n! = \sqrt{2\pi n} \left(\frac{n}{e}\right)^n (1 + O(1/n))$
 - $\log(n!) \in \Theta(n \log n)$
-
-**Summation and series**
+##### **Summation and series**
 - Finite GP: $\sum_{k=0}^{n} x^k = 1 + x + x^2 + \cdots + x^n = \frac{x^{n+1} - 1}{x - 1}$
 - Infinite GP: $\sum_{k=0}^{\infty} x^k = \frac{1}{1 - x}$
 - AP: $\sum_{k=0}^{n} k = 1 + 2 + \cdots + n = \frac{n(n + 1)}{2}$, $\Theta(n^2)$
@@ -33,72 +106,58 @@
 - Finite GP term: $T_k = ar^k$
 - Finite GP sum: $S_n = \frac{a(1 -  r^n)}{1-r}$
 - Weighted Geometric Series: $\Sigma_{i=0}^\infty ir^i = \frac{r}{(1-r)^2}, |r| < 1$
-- Harmonic series: $\sum_{i=1}^{n} \frac{1}{i} = ln(n)+\gamma + o(1) \in \theta(logn)$
-- Reciprocal Log: $\sum_{k=2}^{n} \frac{1}{logk} = \theta(n / logn)$ 
-- Harmonic over log: $\sum_{k=2}^{n} \frac{1}{klogk} = \theta(loglogn)$
+- Harmonic series: $\sum_{i=1}^{n} \frac{1}{i} = ln(n)+\gamma + o(1) \in \Theta(logn)$
+- Reciprocal Log: $\sum_{k=2}^{n} \frac{1}{logk} = \Theta(n / logn)$ 
+- Harmonic over log: $\sum_{k=2}^{n} \frac{1}{klogk} = \Theta(loglogn)$
 - Squared log: $\sum_{k=2}^{n} \frac{1}{k(logk)^p}$ 
-	- $p > 1$: $\theta (1)$
-	- $p = 1$: $\theta (loglogn)$
-	- $0 < p < 1$: $\theta((logn)^{1-p})$
+	- $p > 1$: $\Theta (1)$
+	- $p = 1$: $\Theta (loglogn)$
+	- $0 < p < 1$: $\Theta((logn)^{1-p})$
 - Derivative of Geometric Series:
 	- $\sum^{\infty}_{i=0}x^i = 1/(1-x)$
 	- Differentiate both sides w.r.t $x$: $\sum^{\infty}_{i=0}i \cdot x^{i-1} = 1 / (1-x)^2$
 	- Multiply both sides by $x$: $\sum^{\infty}_{i=0}i \cdot x^i = x / (1 -x)^2$
-**Generalised Harmonic Series**
-$\sum_{i=1}^{n} \frac{1}{i^p}$
-- $p > 1$: $\theta (1)$
-- $p = 1$: $\theta (logn)$
-- $0 < p < 1$: $\theta(n^{1-p})$
-
-**L'Hospital's Rule**
+##### **Generalised Harmonic Series**
+- $\sum_{i=1}^{n} \frac{1}{i^p}$
+	- $p > 1$: $\Theta (1)$
+	- $p = 1$: $\Theta (logn)$
+	- $0 < p < 1$: $\Theta(n^{1-p})$
+##### **L'Hospital's Rule**
 - technique for evaluating indeterminate limits
 - if $\lim_{x\to\infty} f(x) = \infty$ and $\lim_{x\to\infty} g(x) = \infty$, then:
 	- $\lim_{x\to\infty} \frac{f(x)}{g(x)} = \lim_{x\to\infty} \frac{f'(x)}{g'(x)}$
 - where $f'(x)$ and $g'(x)$ are the derivatives of $f(x)$ and $g(x)$.
 - $n \ln n \in o(n^2)$, meaning $n \ln n$ grows strictly slower than $n^2$
-
-**Useful inequalities**
+##### **Useful inequalities**
 - $1 + x \leq e^x$
-
-**Sample Space and Event**
-* **Sample Space ($S$):** The set of all possible outcomes (elementary events) of an experiment.
-*  **Event ($A$):** Any subset of the sample space.
-*  **Complement of an Event ($\bar{A}$):** The set of all outcomes in $S$ that are not in $A$, defined as $\bar{A} = S - A$.
-
-**Probability Distribution**
+##### **Probability Distribution**
 A probability distribution $\Pr()$ is a mapping from events to real numbers that satisfies three axioms:
 1.  **Non-x:** $\Pr(A) \ge 0$ for all events $A$.
 2.  **Normalization:** $\Pr(S) = 1$.
 3.  **Additivity:** $\Pr(A \cup B) = \Pr(A) + \Pr(B)$ for mutually exclusive (disjoint) events $A$ and $B$.
-
-**General Probability Rules**
+##### **General Probability Rules**
 * **Inclusion-Exclusion Principle (for two events):** $\Pr(A \cup B) = \Pr(A) + \Pr(B) - \Pr(A \cap B)$.
 * **Independence:** Two events $A$ and $B$ are independent if and only if $\Pr(A \cap B) = \Pr(A) \cdot \Pr(B)$.
-
-**Conditional Probability**
+##### **Conditional Probability**
 The conditional probability of event $A$ given event $B$ (where $\Pr(B) \ne 0$) is defined as:
 - $\Pr(A|B) = \frac{\Pr(A \cap B)}{\Pr(B)}$
-
-**Bayes' Theorem**
+##### **Bayes' Theorem**
 $\Pr(A|B) = \frac{\Pr(A) \Pr(B|A)}{\Pr(B)}$
 
 The denominator $\Pr(B)$ can be expanded using the Law of Total Probability (for an event $A$ and its complement $\bar{A}$):
 $$\Pr(A|B) = \frac{\Pr(A) \cdot \Pr(B|A)}{\Pr(A) \cdot \Pr(B|A) + \Pr(\bar{A}) \cdot \Pr(B|\bar{A})}$$
-**Random Variable**
+##### **Random Variable**
 A function that maps the outcomes in the sample space ($S$) to real numbers.
 * The function $f(x) = \Pr(X = x)$ is the **probability density function** (or probability mass function for discrete variables) of $X$.
-
-**Expectation (Mean)**
+##### **Expectation (Mean)**
 The expectation or mean of a random variable $X$ is the weighted average of all possible values of $X$:
 - $E(X) = \sum_{x} x \cdot \Pr(X = x)$
-
-**Linearity of Expectation**
+##### **Linearity of Expectation**
 Expectation is a linear operator:
 *   $E(X + Y) = E(X) + E(Y)$
 *   $E(aX) = a E(X)$
 *   **For independent variables:** $E(XY) = E(X) \cdot E(Y)$
-
-**Event Operations**
+##### **Event Operations**
 1. $A \cap A' = \emptyset$
 2. $A \cap \emptyset = \emptyset$
 3. $A \cup A' = S$
@@ -111,13 +170,11 @@ Expectation is a linear operator:
 10. $(A \cup B)' = A' \cap B'$
 11. $(A_1 \cap A_2 \cap \dots \cap A_n)' = A_1' \cup A_2' \cup \dots \cup A_n'$
 12. $(A \cap B)' = A' \cup B'$
-
-**Permutations and Combinations**
-$P^n_r=\frac{n!}{(n-r)!}=n(n-1)(n-2)\dots (n-(r-1))$ 
-$n \choose {r}$ = $\frac{n!}{r!(n-r)!}$
-$n\choose r$ = $n \choose (n-r)$ 
-
-**Probability**
+##### **Permutations and Combinations**
+- $P^n_r=\frac{n!}{(n-r)!}=n(n-1)(n-2)\dots (n-(r-1))$ 
+- $n \choose {r}$ = $\frac{n!}{r!(n-r)!}$
+- $n\choose r$ = $n \choose (n-r)$ 
+##### **Probability**
 - $P(A)=P(A\cap{B})+P(A\cap \overline{B})$  
 - $P(A_1 \cap A_2 \cap \dots \cap A_n) = P(A_1) + P(A_2) + \dots + P(A_n)$, if $A_i \cap A_j = \emptyset$ for any $i \neq j$
 - $P(A \cup B) = P(A) + P(B) - P(A \cap B)$ ------- Principle of Inclusion and Exclusion
@@ -137,20 +194,18 @@ $n\choose r$ = $n \choose (n-r)$
 - $P(A_k|B)=\frac{P(A_k)P(B|A_k)}{\sum^n_{i=1}P(A_i)P(B|A_k)}$
 - $P(A|B)=1-P(\overline{A}|B)$ 
 - $P(A)=P(A|B)P(B)+P(A|\overline{B})P(\overline{B})$ 
-
-**Bernoulli Trials**
+##### **Bernoulli Trials**
 A **Bernoulli Trial** is an experiment with exactly two outcomes: success (with probability $p$) and failure (with probability $q = 1 - p$).
-
-**Geometric Distribution**
+##### **Geometric Distribution**
 If $X$ is the number of independent Bernoulli trials needed to obtain the first success:
 *   **Probability:** $\Pr(X = k) = q^{k-1} p$
 *   **Expectation:** $E(X) = \frac{1}{p}$
-
-**Binomial Distribution**
+##### **Binomial Distribution**
 If $X$ is the number of successes in $n$ independent Bernoulli trials:
 *   **Probability:** $\Pr(X = k) = \binom{n}{k} p^k q^{n-k}$
 ---
 #### 1. Asymptotic Analysis
+##### Limits
 **Big-O (g is upper bound of f)**: $f \in O(g)$
 - Definition: $\exists c > 0 \land n_0 > 0 \space \text{s.t} \space \forall n \geq n_0: 0 \leq f(n) \leq c \cdot g(n)$
 - Theorem+Proof: 
@@ -184,7 +239,7 @@ $\omega$ **(g is strict lower bound of f)**: $f \in \omega(g(n))$
 	1. $lim_{n\rightarrow \infty} \frac{f(n)}{g(n)} = \infty$
 	2. $\forall M > 0, \exists n_0 \space \text{s.t} \space \forall n \geq n_0: \frac{f(n)}{g(n)} > M$
 
-**Properties**
+##### **Properties**
 **1. Reflexivity**
 - $f(n) \in O(f(n))$
 	- Choose c = 1
@@ -227,6 +282,50 @@ $\omega$ **(g is strict lower bound of f)**: $f \in \omega(g(n))$
 	- $\forall \epsilon > 0, f(n) \leq \epsilon g(n) \iff \forall c > 0, g(n) \geq cf(n)$
 	- (choose c = 1/$\epsilon$)
 
+##### **Quick Facts**
+**1) Poly-log vs Poly**
+- $(\log n)^{100} \in o(n^{0.1})$: poly-log is always smaller than poly
+- $(\log n)^{\log n} \in \omega(n^{100})$: $(\log n)^{\log n} = 2^{\log\log n \cdot \log n} = n^{\log\log n}$, larger than $n^{100}$
+- $n^{0.001} \in \omega((\log n)^{1000})$: any positive poly exponent beats any poly-log
+- $\log^2 n \in o(n^\epsilon)$ for any $\epsilon > 0$: poly-log always loses to any poly
+
+**2) Exponential identities and conversions**
+- $n^{1/\log n} = 2$: since $n = 2^{\log n}$, $n^{1/\log n} = 2^{\log n / \log n} = 2$. Constant, not growing.
+- $2^{2\log n} = n^2$: $2^{2\log n} = (2^{\log n})^2 = n^2$
+- $n^{\log k} = k^{\log n}$: both equal $2^{\log n \cdot \log k}$
+- $2^{\log^2 n} = n^{\log n}$: $2^{\log^2 n} = (2^{\log n})^{\log n} = n^{\log n}$
+
+**3) Sub-exponential and super-polynomial**
+- $2^{\sqrt{n}} \in \omega(n^{100})$: $2^{\sqrt{n}} = n^{\sqrt{n}/\log n}$ and $\sqrt{n}/\log n \to \infty$
+- $2^{\sqrt{n}} \in o(2^n)$: compare exponents $\sqrt{n} < n$
+- $2^{\log^2 n} \in \omega(n^{100})$: equals $n^{\log n}$, exponent grows past 100
+- $2^{\log^2 n} \in o(2^n)$: $\log^2 n \in o(n)$
+
+**4) Exponential comparisons**
+- $2^n \in \omega(n^c)$ for any constant $c$: exponential always dominates polynomial
+- $2^n \in o(3^n)$: $(2/3)^n \to 0$, smaller base loses
+- $2^{2n} \in \omega(2^n)$: $2^{2n} = (2^n)^2$, ratio $= 2^n \to \infty$. Constant factor in exponent matters.
+- $2^{n+100} \in \Theta(2^n)$: additive constant in exponent is just constant factor $2^{100}$. Does not matter.
+- $n \cdot 2^n \in \omega(2^n)$: polynomial factor in front is **not** absorbed. Ratio $= n \to \infty$.
+
+**5) Factorial**
+- $n! \in \omega(2^n)$: by Stirling, $n! \approx (n/e)^n$, $(n/2e)^n \to \infty$
+- $n! \in o(n^n)$: $n! = 1 \cdot 2 \cdots n < n^n$
+- $\log(n!) \in \Theta(n \log n)$: Stirling
+- $(\log n)! \in \omega(n^{10})$: $(\log n)! \approx (\log n / e)^{\log n} = n^{\log(\log n / e)} = n^{\log\log n - \log e}$, exponent unbounded
+
+**6) Tricky super-polynomial comparisons**
+- $(\log n)^{\log\log n} \in o((\log n)^{\log n})$: same base, compare exponents $\log\log n < \log n$
+- $(\log n)^{\log n} \in o(n^{\log n})$: same exponent, compare bases $\log n < n$
+- $n^{\log\log n} \in o(n^{\log n})$: same base, compare exponents $\log\log n < \log n$
+- $n^{\log\log n} \in \omega(n^{100})$ but $n^{\log\log n} \in o(2^n)$: sits between polynomial and exponential
+
+**7) Common mistakes**
+- $2^{n+1} \in \Theta(2^n)$: yes, just a factor of 2. But $2^{2n} \notin \Theta(2^n)$: that is squaring, not doubling.
+- $\log(n^2) = 2\log n \in \Theta(\log n)$: constant factor inside log exponent does not change asymptotic class
+- $\log(2^n) = n \neq \log n$: do not confuse $\log$ of exponential with $\log$ of polynomial
+- $(\log n)^2 \neq \log(n^2)$: $(\log n)^2 = \log^2 n$ vs $\log(n^2) = 2\log n$. Very different growth.
+
 ---
 #### 2. Recurrences and Master Theorem
 **Remarks**:
@@ -234,18 +333,15 @@ $\omega$ **(g is strict lower bound of f)**: $f \in \omega(g(n))$
 	- For **upper bound** calculation, we can replace $\theta(n)$ with $cn$ 
 - If $f(n) \in \Omega(n)$, then there exists two constant $c > 0$ and $n_0 > 0$ such that $f(n) \geq cn$ if $n \geq n_0$
 	- For **lower bound** calculation, we can replace $\theta(n)$ with $cn$ 
-
-**(1) Telescoping Series**
+##### **(1) Telescoping Series**
 - Find a way to cancel out each other
 - e.g $T(n)/n = \frac{2}{n}T(\frac{n}{2}) + 1 = T(\frac{n}{2})/\frac{n}{2} + 1$ 
 
-**(2) Substitution Method**
+##### **(2) Substitution Method**
 - Guess a solution, then verify by induction
-
-**(3) Recursion Tree**
+##### **(3) Recursion Tree**
 - Find how many levels and leaves
-
-**(4) Master Theorem**
+##### **(4) Master Theorem**
 - Generic form: $T(n) = aT(n / b) + f(n)$
 	- $a \geq 1$
 	- $b \geq 1$
@@ -275,22 +371,19 @@ $\omega$ **(g is strict lower bound of f)**: $f \in \omega(g(n))$
 2. Initialisation: Base case
 3. Maintenance: Inductive step
 4. Termination: Proof by induction implies the correctness of the algo
-
-**Fibonacci**
+###### **Fibonacci**
 > [!PROOF]
 > 1. Loop invariant: At the start of iteration `i`: `prev2 = Fib(i - 2), prev1 = Fib(i - 1)`
 > 2. Initialisation: `i = 2: prev2 = Fib(0) = 0, prev1 = Fib(1) = 1`
 > 3. Maintenance: Suppose at iteration `i`, `prev2 = Fib(i - 2), prev1 = Fib(i - 1)`, then at end of the iteration, `prev2 = Fib(i - 1), prev1 = Fib(i)`
 > 4. Termination: Algorithm returns `Fib(n)`
-
-**Selection sort**
+###### **Selection sort**
 > [!proof]
 > 1. Loop invariant: $A[1..j-1]$ is sorted and ($x \leq y$ for all $x \in A[1..j-1]$ and $y \in A[j..n]$)
 > 2. Initialisation: True because nothing in LHS
 > 3. Maintenance: Take new element from $A[j..n]$ and swap, invariant maintained
 > 4. Termination: New element inserted is bigger than that already inserted, and add this to the end. Thus it's sorted
-
-**Weighted Directed Graphs**
+###### **Weighted Directed Graphs**
 > [!proof]
 > **Definitions**
 > 1. $s$: Source vertex
@@ -347,26 +440,54 @@ $\omega$ **(g is strict lower bound of f)**: $f \in \omega(g(n))$
 | -------------- | --------- | ------------------- | ---------------- | ---------------------------- |
 | Binary Heap    | $O(logn)$ | $O(logn)$           | $O(logn)$        | $O(\|E\| + \|V\|) log\|V\|)$ |
 | Fibonacci Heap | $O(1)$    | $O(logn)$ amortized | $O(1)$ amortized | $O(\|E\| + \|V\|log\|V\|)$   |
-##### **Recursive Algorithms**
+###### **Insertion Sort**
+> [!NOTE]
+> **Pseudocode**
+> ```
+> 1 for i = 1 to N − 1 do // outer for-loop i
+>       // X is the next item to insert into A[0..i − 1]
+> 2     Let X = A[i] 
+>       // inner for-loop j
+> 3     for j = i − 1 down to 0 do 
+> 4       if A[j] > X then
+> 			 // Make space for X	
+> 5            A[j + 1] = A[j] 
+> 6       else
+> 7            break
+> 8      A[j + 1] = X // Insert X at index j + 1
+> ```
+> 
+> **Loop invariant for outer for-loop $i$**
+> - The invariant is true at the beginning when i = 1, i.e., `A[0] = B[0]` is a single integer and by default is sorted.
+> - The rest of the array is as `A[1..N − 1] = B[1..N − 1]`
+> - As we have been given the assumption that the inner for-loop j is correct, after it terminates (break) and we reach Step 8, we will correctly slot X at `A[j + 1]`, maintaining that `A[0..i]` now consists of the sorted values of `B[0..i]` (one index more than before).
+> - At termination, `i = N − 1`, then the invariant says that `A[0..N − 1]` consists of the sorted values of the original array `B[0..N − 1]`, which shows the correctness of InsertionSort(A).
+> 
+> **Loop invariant for inner for-loop $j$**
+> 1. `A[0..j]A[j + 2..i]` is the sorted version of `B[0..i − 1]`.
+> 2. `A[i + 1..N − 1] = B[i + 1..N − 1]`.
+> 3. `X = B[i]`.
+> 4. `If j + 2 ≤ i`, then `A[j + 2] > X`.
+##### **Recursive Algorithms (Divide and Conquer)**
 1. Base case
 2. Inductive step:
 	1. Assume algo is correct for any input of size $\leq n$
 	2. Show the algo is correct for any input of size $n$
-
-**Searching in a sorted array**
-1. Inductive step: Assume algo works for any input of size $< n$
-2. If $x = A[mid]$, answer is YES
-3. If $x > A[mid]$:
-	1. $x \in A[lb..ub] \iff x \in A[mid + 1..ub]$ -- A is sorted
-	2. Therefore, answer must be $\text{BinarySearch(A, mid + 1, ub, x)}$ -- Induction Hypothesis
-4. Similar for $x < A[mid]$
-- Depth: $O(logn)$, $T(n) \in O(logn)$
+###### **Searching in a sorted array**
+> [!NOTE]
+> 1. Inductive step: Assume algo works for any input of size $< n$
+> 2. If $x = A[mid]$, answer is YES
+> 3. If $x > A[mid]$:
+> 	1. $x \in A[lb..ub] \iff x \in A[mid + 1..ub]$ -- A is sorted
+> 	2. Therefore, answer must be $\text{BinarySearch(A, mid + 1, ub, x)}$ -- Induction Hypothesis
+> 4. Similar for $x < A[mid]$
+> - Depth: $O(logn)$, $T(n) \in O(logn)$
 
 **Divide and Conquer**
 $$ 
 T_n =  
 \begin{cases}  
-\theta(1) & \text{if } n \leq 1 \\  
+\Theta(1) & \text{if } n \leq 1 \\  
 aT(\frac{n}{b}) + f(n) & \text{otherwise.}  
 \end{cases}  ​
 $$
@@ -376,97 +497,96 @@ $$
 **Improving divide-and-conquer algorithm**
 1. Option 1: Reduce cost for splitting/combining
 2. Option 2: Reduce number of subproblems
-
-**Exponentiation**
-**1. $a^n = a^{n-1} \cdot a$**
-- $T(n) = T(n-1) + \theta(1) \in \theta(n)$
-
-**2. Fast exponentiation**
-- If $n$ is even: $a^n = a^{\lfloor n/2\rfloor} \cdot a^{\lfloor n/2 \rfloor}$
-- If $n$ is odd: $a^n = a^{\lfloor n/2 \rfloor} \cdot a^{\lfloor n/2 \rfloor} \cdot a$
-- $T(n) = T(\lfloor n/2 \rfloor) + \theta(1) \in \theta(logn)$
-
-**Fibonacci with matrices**
-$$
-\begin{pmatrix}
-F_{n+1} & F_n \\
-F_n & F_{n-1}
-\end{pmatrix}
-=
-\begin{pmatrix}
-F_n + F_{n-1} & F_n \\
-F_{n-1} + F_{n-2} & F_{n-1}
-\end{pmatrix}
-=
-\begin{pmatrix}
-F_n & F_{n-1} \\
-F_{n-1} & F_{n-2}
-\end{pmatrix}
-\begin{pmatrix}
-1 & 1 \\
-1 & 0
-\end{pmatrix}
-$$
-$$
-\begin{pmatrix}
-F_{n+1} & F_n \\
-F_n & F_{n-1}
-\end{pmatrix}
-=
-\begin{pmatrix}
-1 & 1 \\
-1 & 0
-\end{pmatrix}^n
-$$
-
-**Matrix Multiplication**
-**1. Divide and conquer**
-Partition matrices (A), (B), and (C) into block matrices:
-$$  
-C =
-\begin{pmatrix}  
-r & s \\  
-t & u  
-\end{pmatrix},  
-\quad  
-A =  
-\begin{pmatrix}  
-a & b \\  
-c & d  
-\end{pmatrix},  
-\quad  
-B =  
-\begin{pmatrix}  
-e & f \\  
-g & h  
-\end{pmatrix}  
-$$
-Then:
-$$
-\begin{pmatrix}  
-r & s \\  
-t & u  
-\end{pmatrix}
-=
-\begin{pmatrix}  
-a & b \\ 
-c & d  
-\end{pmatrix}
-\cdot
-\begin{pmatrix}  
-e & f \\  
-g & h  
-\end{pmatrix}  
-$$
-- $r = ae + bg, s = af + bh, t = ce + dg, u = cf + dh$  
-- All blocks $(r,s,t,u,a,b,c,d,e,f,g,h)$ are $\left(\frac{n}{2} \times \frac{n}{2}\right)$ matrices.
-- 8 multiplications of $\left(\frac{n}{2} \times \frac{n}{2}\right)$ matrices
-- 4 additions of $\left(\frac{n}{2} \times \frac{n}{2}\right)$ matrices
-- $T(n) = 8T\left(\frac{n}{2}\right) + \Theta(n^2)$
-- $T(n) \in \Theta(n^{\log_2 8})$ = $\theta(n^3)$
-
-**2. Strassen's Algorithm**
+###### **Exponentiation**
 > [!NOTE]
+> **1. $a^n = a^{n-1} \cdot a$**
+> - $T(n) = T(n-1) + \Theta(1) \in \Theta(n)$
+> 
+> **2. Fast exponentiation**
+> - If $n$ is even: $a^n = a^{\lfloor n/2\rfloor} \cdot a^{\lfloor n/2 \rfloor}$
+> - If $n$ is odd: $a^n = a^{\lfloor n/2 \rfloor} \cdot a^{\lfloor n/2 \rfloor} \cdot a$
+> - $T(n) = T(\lfloor n/2 \rfloor) + \Theta(1) \in \Theta(\log{n})$
+
+**Fibonacci with matrices (Strassen's Algorithm)**
+> [!NOTE]
+> $$
+> \begin{pmatrix}
+> F_{n+1} & F_n \\
+> F_n & F_{n-1}
+> \end{pmatrix}
+> =
+> \begin{pmatrix}
+> F_n + F_{n-1} & F_n \\
+> F_{n-1} + F_{n-2} & F_{n-1}
+> \end{pmatrix}
+> =
+> \begin{pmatrix}
+> F_n & F_{n-1} \\
+> F_{n-1} & F_{n-2}
+> \end{pmatrix}
+> \begin{pmatrix}
+> 1 & 1 \\
+> 1 & 0
+> \end{pmatrix}
+> $$
+> $$
+> \begin{pmatrix}
+> F_{n+1} & F_n \\
+> F_n & F_{n-1}
+> \end{pmatrix}
+> =
+> \begin{pmatrix}
+> 1 & 1 \\
+> 1 & 0
+> \end{pmatrix}^n
+> $$
+> 
+> **Matrix Multiplication**
+> **Divide and conquer**
+> Partition matrices (A), (B), and (C) into block matrices:
+> $$  
+> C =
+> \begin{pmatrix}  
+> r & s \\  
+> t & u  
+> \end{pmatrix},  
+> \quad  
+> A =  
+> \begin{pmatrix}  
+> a & b \\  
+> c & d  
+> \end{pmatrix},  
+> \quad  
+> B =  
+> \begin{pmatrix}  
+> e & f \\  
+> g & h  
+> \end{pmatrix}  
+> $$
+> Then:
+> $$
+> \begin{pmatrix}  
+> r & s \\  
+> t & u  
+> \end{pmatrix}
+> =
+> \begin{pmatrix}  
+> a & b \\ 
+> c & d  
+> \end{pmatrix}
+> \cdot
+> \begin{pmatrix}  
+> e & f \\  
+> g & h  
+> \end{pmatrix}  
+> $$
+> - $r = ae + bg, s = af + bh, t = ce + dg, u = cf + dh$  
+> - All blocks $(r,s,t,u,a,b,c,d,e,f,g,h)$ are $\left(\frac{n}{2} \times \frac{n}{2}\right)$ matrices.
+> - 8 multiplications of $\left(\frac{n}{2} \times \frac{n}{2}\right)$ matrices
+> - 4 additions of $\left(\frac{n}{2} \times \frac{n}{2}\right)$ matrices
+> - $T(n) = 8T\left(\frac{n}{2}\right) + \Theta(n^2)$
+> - $T(n) \in \Theta(n^{\log_2 8})$ = $\theta(n^3)$
+> 
 > $$  
 > C =  
 > \begin{pmatrix}  
@@ -515,26 +635,257 @@ $$
 > - 18 additions/subtractions of $\left(\frac{n}{2} \times \frac{n}{2}\right)$ matrices
 > - $T(n) = 7T\left(\frac{n}{2}\right) + \Theta(n^2)$
 > - $T(n) \in \Theta(n^{\log_2 7})  \in \Theta(n^{2.807...})$
+###### StoogeSort
+> [!NOTE]
+> **Pseudocode**
+> ```
+> 1 Let n be the length of array A
+> 2 if n = 2 and A[0] > A[1] then
+> 3     Swap A[0] and A[1]
+> 4 if n > 2 then
+> 5     Apply StoogeSort to sort the first ⌈2n/3⌉ elements recursively
+> 6     Apply StoogeSort to sort the last ⌈2n/3⌉ elements recursively
+> 7     Apply StoogeSort to sort the first ⌈2n/3⌉ elements recursively
+> ```
+> - We prove the correctness of the algorithm by an induction on the array size n.
+> - Base case: If `n = 1`, the algorithm is trivially correct, as the array is already sorted.
+> - If n = 2, the algorithm is correct due to Step 2.
+> - Inductive step: Now consider the case of n > 2. By induction hypothesis, assume that the algorithm is correct on any array of size smaller than n. Let `r = n − ⌈2n/3⌉ = ⌊n/3⌋`. 
+> - We make the following observation:
+> 	- After Step 5, the r largest numbers of A must be in the final ⌈2n/3⌉ entries of A.
+> 	- This observation implies that the r largest numbers of A are correctly sorted after Step 6.
+> 	- Therefore, at the beginning of Step 7, the initial n−r = ⌈2n/3⌉ numbers of the array are precisely the ⌈2n/3⌉ smallest numbers of A. After Step 7, these ⌈2n/3⌉ numbers are also correctly sorted. 
+> - In the subsequent discussion, we prove the above observation.
+> 	- Let x be any number in the set of r largest numbers of A. 
+> 	- We show that x must be in the final ⌈2n/3⌉ entries of A after Step 5.
+> 	- Suppose x is not one of the initial ⌈2n/3⌉ numbers of A at the beginning of Step 5. 
+> 	- The algorithm of Step 5 does not change the position of x, so x is still in the final n − ⌈2n/3⌉ ≤⌈2n/3⌉ entries of A after Step 5.
+> 	- Suppose x is one of the initial ⌈2n/3⌉ numbers of A at the beginning of Step 5. 
+> 	- Among these ⌈2n/3⌉ numbers, at least ⌈2n/3⌉ − r ≥ r of them are smaller than x. 
+> 	- Therefore, after Step 5, x is not in the initial r entries of A. In other words, x is in the final n − r = ⌈2n/3⌉entries of A after Step 5
+> 
+> **Time complexity**
+> - The runtime T (n) of the algorithm on an array of size n is given by the recurrence relation T (n) = O(1) if n ≤ 2.
+> - 3T (⌈2n/3⌉) + O(1) if n > 2. 
+> - Since a = 3, b = 3/2, and d = $\log_{3/2}{3}$ ≈ 2.7095 . . . and f (n) ∈ O($n^{d−ϵ}$) for some 0.5 = ϵ > 0, by Case 1 of the Master Theorem, we get T (n) ∈ O($n^d$) = O($n^{2.7095...}$).
+> 
+> **Why ⌈2n/3⌉?**
+> - The algorithm sorts in 3 recursive calls. Each call must handle **more than half** the array, otherwise elements can "hide" in the uncovered region and never get compared.
+> - Specifically, the first $\lceil 2n/3 \rceil$ and last $\lceil 2n/3 \rceil$ overlap by $\lceil 2n/3 \rceil + \lceil 2n/3 \rceil - n = \lceil n/3 \rceil$ elements. This overlap is what forces misplaced elements to eventually be compared and moved.
+> - The uncovered tail after Step 5 has $r = \lfloor n/3 \rfloor$ positions. The key invariant is: **the $r$ largest elements must end up in the last $\lceil 2n/3 \rceil$ positions after Step 5**. This works because:
+>     - If a top-$r$ element was already in the tail (not in the first $\lceil 2n/3 \rceil$), Step 5 does not touch it, and the tail has $\leq \lceil 2n/3 \rceil$ positions, so it is already where it needs to be.
+>     - If a top-$r$ element was in the first $\lceil 2n/3 \rceil$, then among those $\lceil 2n/3 \rceil$ elements, at least $\lceil 2n/3 \rceil - r \geq r$ are smaller than it. So after sorting, it sits at position $> r$ (i.e., not in the first $r$ slots), meaning it is in the last $n - r = \lceil 2n/3 \rceil$ positions.
+> - If you used anything $< 2n/3$ (say $n/2$), the overlap would be too small. The uncovered region $r$ would be too large, and you could not guarantee the top-$r$ elements land in the overlap zone. The correctness argument breaks.
+> - If you used anything $> 2n/3$ (say $3n/4$), correctness still holds but the recurrence $T(n) = 3T(3n/4) + O(1)$ gives a worse exponent ($\log_{4/3} 3 \approx 3.82$ vs $\log_{3/2} 3 \approx 2.71$).
+> - So $2n/3$ is the **smallest fraction that makes the correctness proof work**, giving the best possible time complexity for this 3-call structure.
+###### Peak Finding
+> [!NOTE]
+> Given a 2D array with m rows and n columns, where each cell contains a number, a peak is a cell
+> whose value is no smaller than all of its (up to) four neighbours: top, right, bottom, and left
+> 
+> **There is a peak in every 2D array**
+> Since any 2D array must contain at least one maximal element, and a maximal element is no smaller than any other cell (including its four neighbors), all maximal elements are peaks.
+> 
+> **Pseudocode**
+> ```
+> 1 if A has n = 1 column then
+> 2     return a maximal element in the column
+> 3 if A has n ≥ 2 columns then
+> 4     Let Cm be the middle column of A
+> 5     Find a maximal element in Cm
+> 6     if the above maximal element in Cm is a peak then
+> 7         return that element
+> 8     else
+> 9         X ← FindPeakSp(Left Half of A without Cm)
+> 10        Y ← FindPeakSp(Right Half of A without Cm)
+> 11        if X or Y is a peak then
+> 12            return the peak (X or Y )
+> 13        else
+> 14            return None
+> ```
+> 
+> **Time Complexity**
+> - Time complexity of finding a maximal element in any column is Θ(m), as there are m rows.
+> - So, we can consider how many columns are processed, then multiply the result by Θ(m).
+> - Let T (n) be the number of columns to be processed, then T (n) = 2 · T (n/2) + 1.
+> - Since a = 2, b = 2, d = log2 = 1, and f (n) ∈ O($n^{d−ϵ}$) for some 0.5 = ϵ > 0, by Case 1 of the Master Theorem, we get T (n) ∈ Θ($n^d$) = Θ($n^{\log{2}}$) = Θ(n).
+> - Thus, FindPeakSp(A) runs in T (n) × Θ(m) = Θ(n) × Θ(m) ∈ Θ(nm).
+> 
+> **Why always return a peak**
+> - If we reach Step 8, the chosen maximal element W in the middle column (the k-th column) is not a peak. 
+> - This implies one of the following scenarios for W :
+> 	- Only the right neighbour of W is larger.
+> 	- Only the left neighbour of W is larger. (Symmetric to above)
+> 	- Both the left and right neighbours of W are larger. (Covered by the two cases above)
+> - Hence, we focus on the case where the right neighbour of W in column k + 1 (denoted as X) is larger.
+> - ![[Screenshot 2026-04-20 at 4.31.54 PM.png]]
+> - Figure 1: Illustration of the scenario where the right neighbor X in column k + 1 is larger than W .
+> - The figure highlights the relevant elements W (max in Cm), X, Y , and Z (special-peak of A′).
+> - We argue below that this guarantees the existence of a special-peak in the columns k + 1, k + 2, . . .(i.e., columns > k). Refer to Figure 1 for an illustration of this scenario.
+> - A special-peak in the right subarray `A′ = A[1..m][k + 1..n]` must also be a special-peak of A if it is located in any column other than column k + 1. 
+> - Thus, the only case requiring further consideration is when a special-peak of A′ is located in column k + 1, as it directly borders column k.
+> - Let Z be a special-peak of A′ located in column k + 1 of A. Observe the following:
+> 	- Z is a maximal element in column k + 1 of A, so Z ≥ X, where X is the right neighbor of W 
+> 	- Z is not smaller than any of its neighbors in A′, i.e., it is not smaller than its top, bottom, or right neighbours. 
+> - To confirm that Z is also a special-peak of A, we need to show that Z is not smaller than its left neighbour Y in column k.
+> - Since the right neighbur of W is larger (X > W ) and Z ≥ X, it follows that: Z ≥ X > W ≥ Y.
+> - This implies that Z is not smaller than its left neighbour Y . 
+> - Therefore, Z is a special-peak of A.
+> 
+> **How to optimise the else condition**
+> ```
+> 1 if A has n = 1 column then
+> 2     return a maximal element in the column
+> 3 if A has n ≥ 2 columns then
+> 4     Let Cm be the middle column of A
+> 5     Find a maximal element in Cm
+> 6     if the above maximal element in Cm is a peak then
+> 7         return that element
+> 8     elif right ngb of above maximal element in Cm is larger then
+> 10        return FindPeakSp-Imp(Right Half of A without Cm)
+> 11    else
+> 12        return FindPeakSp-Imp(Left Half of A without Cm)
+> ```
+> - Now we analyse its asymptotic behaviour.
+> - Let T (n) represent the number of columns processed. In this case, the recurrence is: T (n) = T (n/2)+1.
+> - Since a = 1, b = 2, d = 0, and f (n) ∈ Θ($n^d$), Case 2 of the Master Theorem yields: T (n) ∈ Θ(log n). 
+> - Thus, the overall algorithm runs in T (n) × Θ(m) = Θ(log n) × Θ(m) ∈ Θ(m log n), which is asymptotically faster.
+###### Karatsuba Multiplication
+> [!NOTE]
+> - Multiplies two $n$-digit numbers faster than the naive $O(n^2)$ grade-school algorithm.
+> - Key idea: reduce 4 sub-multiplications to **3** using an algebraic trick, at the cost of extra additions.
+> - Time: $T(n) = 3T(n/2) + O(n) \Rightarrow O(n^{\log_2 3}) \approx O(n^{1.585})$ by Master Theorem (Case 1).
+> 
+> **Setup**
+> - Split two $n$-digit numbers $x$ and $y$ at the midpoint $m = \lfloor n/2 \rfloor$: $$x = x_1 \cdot B^m + x_0, \quad y = y_1 \cdot B^m + y_0$$
+> - where $B$ is the base (e.g., 10 or $2^{32}$), $x_1, y_1$ are the high halves, $x_0, y_0$ are the low halves.
+> 
+> **Naive approach (4 multiplications)** $$x \cdot y = x_1 y_1 \cdot B^{2m} + (x_1 y_0 + x_0 y_1) \cdot B^m + x_0 y_0$$
+> 
+> - Requires 4 recursive multiplications: $x_1 y_1$, $x_1 y_0$, $x_0 y_1$, $x_0 y_0$. Gives $T(n) = 4T(n/2) + O(n) = O(n^2)$.
+> 
+> **Karatsuba's trick (3 multiplications)**
+> - Compute only 3 products:
+>     - $p_0 = x_0 \cdot y_0$
+>     - $p_2 = x_1 \cdot y_1$
+>     - $p_1 = (x_0 + x_1)(y_0 + y_1)$
+> - Recover the cross term: $x_1 y_0 + x_0 y_1 = p_1 - p_0 - p_2$
+>     - This works because $(x_0 + x_1)(y_0 + y_1) = x_0 y_0 + x_0 y_1 + x_1 y_0 + x_1 y_1$, so subtracting $p_0$ and $p_2$ isolates the cross term.
+> - Final result: $$x \cdot y = p_2 \cdot B^{2m} + (p_1 - p_0 - p_2) \cdot B^m + p_0$$
+> ```
+> KARATSUBA(x, y, n):
+>     if n = 1: return x * y    // base case
+> 
+>     m = ⌊n/2⌋
+>     // split
+>     x1, x0 = x / B^m, x mod B^m
+>     y1, y0 = y / B^m, y mod B^m
+> 
+>     // 3 recursive multiplications
+>     p0 = KARATSUBA(x0, y0, m)
+>     p2 = KARATSUBA(x1, y1, n - m)
+>     p1 = KARATSUBA(x0 + x1, y0 + y1, n - m + 1)
+> 
+>     return p2 * B^(2m) + (p1 - p0 - p2) * B^m + p0
+> ```
+> 
+> > **Example**: $x = 1234$, $y = 5678$, base $B = 10$, $m = 2$.
+> > 
+> > - Split: $x_1 = 12, x_0 = 34$, $y_1 = 56, y_0 = 78$.
+> > - $p_0 = 34 \times 78 = 2652$
+> > - $p_2 = 12 \times 56 = 672$
+> > - $p_1 = (34 + 12)(78 + 56) = 46 \times 134 = 6164$
+> > - Cross term: $6164 - 2652 - 672 = 2840$
+> > - Result: $672 \times 10^4 + 2840 \times 10^2 + 2652 = 6720000 + 284000 + 2652 = 7006652$.
+> > - Verify: $1234 \times 5678 = 7006652$. Correct.
+> 
+> **Why it matters**
+> - Saved 1 multiplication per recursive level. Sounds small, but changes the recurrence branching factor from 4 to 3, reducing exponent from $\log_2 4 = 2$ to $\log_2 3 \approx 1.585$.
+> - Same principle generalizes: Toom-Cook splits into more pieces to get closer to $O(n^{1+\epsilon})$, and FFT-based multiplication achieves $O(n \log n \log \log n)$.
+###### H-Index
+> [!NOTE]
+> - Given array $A[1..n]$ sorted in **non-increasing** order. Find the largest index $i$ such that $A[i] \geq i$.
+> - Intuition: a researcher has H-index $h$ if $h$ of their papers have $\geq h$ citations each.
+> - Convention: extend array so $A[0] > 0$ and $A[n+1] < n+1$. Guarantees a unique answer.
+> 
+> **Key monotonic property (enables binary search)**
+> - If $A[j] \geq j$, then $A[j-1] \geq j-1$ (everything to the left is also valid).
+> - If $A[j] < j$, then $A[j+1] < j+1$ (everything to the right is also invalid).
+> - So the array looks like: $T, T, T, \ldots, T, F, F, \ldots, F$. We want the last $T$.
+> 
+> **Method 1: Linear Search -- $O(n)$**
+> - Iterate $i = 1$ to $n$, find the last $i$ where $A[i] \geq i$.
+> - Simple but slow for large $n$.
+> 
+> **Method 2': Double Binary Search -- $O(\log c_1 \cdot \log n)$**
+> - Binary search on the **answer value** between $lo = 0$ and $hi = c_1$ (max citation count).
+> - At each guess $mid$: binary search the sorted array to find how many papers have $\geq mid$ citations (i.e., find index $i$ where $c_i \geq mid$).
+> - If $i \geq mid$: enough papers, guess higher, set $lo = mid$.
+> - If $i < mid$: not enough papers, guess lower, set $hi = mid$.
+> - Outer loop: $O(\log c_1)$ iterations. Inner binary search: $O(\log n)$ each. Total: $O(\log c_1 \cdot \log n)$.
+> - Downside: depends on $c_1$ (citation values), not just $n$.
+> 
+> **Method 2: Binary Search on index -- $O(\log n)$**
+> - Binary search on the **index** between $lo = 0$ and $hi = n$ instead (answer never exceeds $n$).
+> - At each guess $mid$: directly check if $A[mid] \geq mid$.
+>     - If yes: answer is $\geq mid$, search right half ($lo = mid$).
+>     - If no: answer is $< mid$, search left half ($hi = mid$).
+> - $O(\log n)$ total. Simpler and faster than Method 2'.
+> ```
+> H-INDEX-BINARY(A, n):
+>     lo = 0, hi = n
+>     while lo < hi:
+>         mid = ⌈(lo + hi + 1) / 2⌉   // upper-mid to avoid infinite loop
+>         if A[mid] >= mid:
+>             lo = mid
+>         else:
+>             hi = mid - 1
+>     return lo
+> ```
+> 
+> **Method 3: Doubling + Binary Search -- $O(\log i)$ where $i$ is the answer**
+> - If n is very large but the H-Index is actually small
+> - First, find the least $k$ such that $A[2^k] < 2^k$, by trying $k = 0, 1, 2, \ldots$. Takes $O(\log i)$ steps.
+> - If $k = 0$: answer is 0, done.
+> - Otherwise: $A[2^{k-1}] \geq 2^{k-1}$ but $A[2^k] < 2^k$. Answer lies in $[2^{k-1}, 2^k]$.
+> - Binary search within this range: $O(\log(2^k - 2^{k-1})) = O(k) = O(\log i)$.
+> - Total: $O(\log i)$. **Output-sensitive**: faster when the answer is small relative to $n$.
+###### **Ball Weighing Problem (D&C + Lower Bound)**
+> [!NOTE]
+> - $n$ balls, all same weight except one heavier ball. Find it using a balance scale. Minimize worst-case weighings.
+> - Balance scale has **3 outcomes** per weighing: left heavy, right heavy, balanced ($<, =, >$).
+> 
+> **Strategy: divide into 3 groups**
+> - Split balls into 3 groups of $\lfloor n/3 \rfloor$ (as equal as possible).
+> - Weigh group 1 vs group 2.
+>     - If one side heavier: heavy ball is in that group.
+>     - If balanced: heavy ball is in group 3 (the unweighed group).
+> - Recurse on the identified group of size $n/3$.
+> - Each weighing eliminates $2/3$ of the balls.
+> 
+> **Number of weighings**: $T(n) = T(n/3) + 1 = \lceil \log_3 n \rceil$
+> 
+> **Lower bound proof**
+> - Each weighing has 3 possible outcomes, so $k$ weighings can distinguish at most $3^k$ scenarios.
+> - There are $n$ possible answers (any of the $n$ balls could be heavy).
+> - Need $3^k \geq n \Rightarrow k \geq \lceil \log_3 n \rceil$.
+> - The divide-into-3 strategy **matches** this lower bound, so it is optimal.
+> 
+> **Why not split into 2 groups?**
+> - Splitting in half wastes information. Each weighing gives 3 outcomes but splitting into 2 only uses 2 (heavier side or lighter side). The balanced outcome is wasted.
+> - Would need $\lceil \log_2 n \rceil$ weighings instead of $\lceil \log_3 n \rceil$.
 
 ---
 #### 4. Sorting
+##### Comparison-based
 **Lower bound for comparison-based sorting**
 - **Theorem: The worst-case complexity of any comparison-based sorting algo is $\ohm(nlogn)$**
 - Decision tree: binary tree with at least $n!$ leaves, each permutation a possible answer
 - Height of tree at least $log(n!) \in nlogn - nloge + O(logn) \subseteq \Theta(nlogn)$ (Stirling's approx.)
-
-**Merge $k$ sorted arrays: $\ohm(kn\log k)$**
+###### **Merge $k$ sorted arrays**
 - As the $k$ arrays are sorted, number of possible ways to combine them is ${(kn)!}/{(n!)^k}$
 - $\log({(kn)!}/{(n!)^k}) \in \ohm(kn\log k)$
-
-**Non-comparison sorts**
-Assume:  $A[i] \in {1,2,\dots,k}$
-Algorithm:
-- Count occurrences
-- Reconstruct sorted array
-- $O(n + k)$, no comparisons required.
-
-**Quick Sort**
+###### **Quick Sort**
 > [!NOTE]
 > **Partition**
 > 1. Choose pivot.
@@ -555,8 +906,7 @@ Algorithm:
 > - Using harmonic series: $\sum_{i=1}^{n} \frac{1}{i} \approx \ln n$
 > - $\boxed{A(n) = O(n \log n)}$
 > 
-
-**Desirable Properties of Sorting**
+##### **Desirable Properties of Sorting**
 1. Stable (order preserved)
 	- $A[i] = A[j], ; i<j$
 	- Insertion sort: stable
@@ -567,15 +917,114 @@ Algorithm:
 	- Insertion sort: $O(1)$
 	- Merge sort: $O(n)$ 
 	- Quicksort: $O(\log n)$ stack
+##### **Non-comparison sorts**
+Assume:  $A[i] \in {1,2,\dots,k}$
+Algorithm:
+- Count occurrences
+- Reconstruct sorted array
+- $O(n + k)$, no comparisons required.
+###### Counting Sort
+> [!NOTE]
+> - **Not comparison-based**. Exploits the fact that input values come from a known finite range.
+> - Input: array $A[0..n-1]$ where each element $\in {0, 1, \ldots, k}$.
+> - Time: $O(n + k)$. Space: $O(n + k)$.
+> - **Stable**: equal elements appear in the output in the same order as the input. This is critical when used as a subroutine in radix sort.
+> - Beats the $\Omega(n \log n)$ comparison-based lower bound because it does not compare elements.
+> 
+> **Algorithm**
+> 1. Create count array $C[0..k]$, initialized to 0.
+> 2. For each $A[i]$: increment $C[A[i]]$.
+> 3. Compute prefix sums: for $j = 1$ to $k$, set $C[j] = C[j] + C[j-1]$. Now $C[j]$ = number of elements $\leq j$.
+> 4. Build output array $B[0..n-1]$: iterate $A$ from right to left (for stability). For each $A[i]$: place $A[i]$ at $B[C[A[i]] - 1]$, then decrement $C[A[i]]$.
+> 
+> ```
+> COUNTING-SORT(A, k):
+>     n = len(A)
+>     C = array of size (k+1), all zeros
+>     B = array of size n
+> 
+>     // Step 1: count occurrences
+>     for i = 0 to n-1:
+>         C[A[i]] += 1
+> 
+>     // Step 2: prefix sums (C[j] = # elements <= j)
+>     for j = 1 to k:
+>         C[j] = C[j] + C[j-1]
+> 
+>     // Step 3: place elements (right to left for stability)
+>     for i = n-1 downto 0:
+>         B[C[A[i]] - 1] = A[i]
+>         C[A[i]] -= 1
+> 
+>     return B
+> ```
+> 
+> > **Example**: $A = [2, 0, 2, 1, 1, 0]$, $k = 2$.
+> > 
+> > - Count: $C = [2, 2, 2]$ (two 0s, two 1s, two 2s).
+> > - Prefix sum: $C = [2, 4, 6]$.
+> > - Place (right to left): $A[5]=0 \to B[1], C[0]=1$. $A[4]=1 \to B[3], C[1]=3$. $A[3]=1 \to B[2], C[1]=2$. $A[2]=2 \to B[5], C[2]=5$. $A[1]=0 \to B[0], C[0]=0$. $A[0]=2 \to B[4], C[2]=4$.
+> > - Result: $B = [0, 0, 1, 1, 2, 2]$.
+> 
+> **Why right-to-left in Step 3?**
+> - Guarantees stability. Elements with the same value are placed from the last occurrence first, filling positions from right to left within their group. This preserves original relative order.
+> 
+> **When to use**
+> - $k \in O(n)$: runs in $O(n)$, very efficient.
+> - $k \in \omega(n \log n)$: worse than comparison-based sorts. Not worth it.
+> - Primarily used as a subroutine in **radix sort**, where $k$ is small (e.g., base 10 or base $n$) and stability is required for correctness.
+###### Radix Sort
+> [!NOTE]
+> - Sorts $n$ integers by processing one digit at a time, from **least significant to most significant**.
+> - Uses a **stable** sub-sort (typically counting sort) at each digit position. Stability is critical: it preserves the relative order from previous digit passes.
+> - Not comparison-based. Bypasses the $\Omega(n \log n)$ lower bound.
+> 
+> **Algorithm**
+> ```
+> RADIX-SORT(A, d):
+>     for i = 1 to d:          // from least significant to most significant digit
+>         Stable-sort A on digit i    // typically counting sort
+> ```
+> - $d$ = number of digits, $k$ = range of each digit (base).
+> - Each pass of counting sort: $O(n + k)$.
+> - Total: $O(d \cdot (n + k))$.
+> 
+> **Choosing the base**
+> - Given $n$ numbers, each in range $[0, U)$. Represent in base $b$: number of digits $d = \lceil \log_b U \rceil$.
+> - Total time: $O(\lceil \log_b U \rceil \cdot (n + b))$.
+> - Set $b = n$ to minimize: $d = \lceil \log_n U \rceil$, each pass is $O(n + n) = O(n)$.
+> - Total: $O(n \cdot \lceil \log_n U \rceil)$.
+> - If $U \in O(n^c)$ for some constant $c$: $\log_n U = O(c) = O(1)$, total $O(n)$. Linear time.
+> 
+> **Why least significant digit first?**
+> - Most significant first would require recursing into sub-buckets (like MSD radix sort), which is more complex.
+> - LSD approach: after processing digits $1, \ldots, i$, all numbers are correctly sorted by their last $i$ digits. Stability ensures that when digit $i+1$ is the same, the ordering from the previous pass (digits $1, \ldots, i$) is preserved.
+> 
+> > **Example**: sort $[329, 457, 657, 839, 436, 720, 355]$ in base 10 ($k = 10$, $d = 3$).
+> > 
+> > - Pass 1 (ones): $[720, 355, 436, 457, 657, 329, 839]$
+> > - Pass 2 (tens): $[720, 329, 436, 839, 355, 457, 657]$
+> > - Pass 3 (hundreds): $[329, 355, 436, 457, 657, 720, 839]$
+> > - Sorted.
+> 
+> **When to use**
+> - $n$ integers in $[0, n^c - 1]$: radix sort with base $n$ gives $O(cn) = O(n)$. Beats comparison sort.
+> - $n$ integers in $[0, 2^n - 1]$: $d = \lceil n / \log n \rceil$, total $O(n^2 / \log n)$. Worse than $O(n \log n)$. Not worth it.
+> - Strings of length $L$ over alphabet $\Sigma$: $O(L \cdot (n + |\Sigma|))$.
+> 
+> **Comparison with counting sort**
+> - Counting sort: $O(n + k)$, works directly when range $k$ is small.
+> - Radix sort: breaks a large range into $d$ small-range passes. Effectively extends counting sort to large ranges without blowing up space.
+> - Radix sort calls counting sort as a subroutine, once per digit.
+
 ---
 #### 5. Randomized Algorithms
-##### **Verification of Matrix Multiplication**
-- Given $A,B,C \in \mathbb{R}^{n \times n}$.  
-- Check if:  $AB = C$
-- Naive: compute $AB$ - $O(n^3) \quad \text{(or } O(n^{2.807}) \text{ with Strassen)}$  
-
-**Freivald’s Algorithm**
+##### **Verification of Matrix Multiplication (Freivald)**
 > [!NOTE]
+> - Given $A,B,C \in \mathbb{R}^{n \times n}$.  
+> - Check if:  $AB = C$
+> - Naive: compute $AB$ - $O(n^3) \quad \text{(or } O(n^{2.807}) \text{ with Strassen)}$  
+> 
 > **Idea**
 > - Given $n\times n$ matrices A, B and C, check if $A \times B=C$
 > - Matrix multiplication AxB is too expensive
@@ -603,6 +1052,12 @@ Algorithm:
 > 	- Else, $AB \neq C$
 > - Because if $AB \neq C$, and repeat for $t = \lceil(\log(\frac{1}{f}))\rceil$ times, then error probability $\frac{1}{2^t} \leq f$
 > 
+> **Why bound 1/2 is actually the best possible**
+> - Consider the smallest 1 × 1 matrices A = (1), B = (0), and C = (1). We have AB != C.
+> - In Freivalds’ algorithm, v = (v1), where v1 is chosen from {0, 1} uniformly at random.
+> - With probability 1/2, v1 = 0, in which case1 A(Bv) = Cv (the answer is incorrect).
+> - With probability 1/2, v1 = 1, in which case A(Bv)̸ = Cv (the answer is correct).
+> - By appending zeros, the construction can be extended to n × n matrices for every positive integer n.
 ##### **Coupon Collector / Balls and Bins**
 > [!NOTE]
 > **Idea**
@@ -634,13 +1089,14 @@ $$
 $$
 - $E[1_{\mathcal{E}}] = Pr(\mathcal{E})$. Good for counting
 
-**Hashing**
-- Hash table of size $n$.  
-- Hash function: $h: U \to {1,\dots,n}$
-- Chain hashing: collisions stored in linked list.
-- Expected number of balls in one bin:  $E[X] = \frac{m}{n}$
-- Expected size of list for element’s bin: $1 + \frac{m-1}{n}$
-- Goal: reduce collisions
+##### **Hashing**
+> [!NOTE]
+> - Hash table of size $n$.  
+> - Hash function: $h: U \to {1,\dots,n}$
+> - Chain hashing: collisions stored in linked list.
+> - Expected number of balls in one bin:  $E[X] = \frac{m}{n}$
+> - Expected size of list for element’s bin: $1 + \frac{m-1}{n}$
+> - Goal: reduce collisions
 ##### Randomized Quick Sort
 > [!NOTE]
 > - Pivot chosen uniformly at random.
@@ -664,6 +1120,95 @@ $$
 > **Theorem:**
 > - $E[T(n)] = O(n \log n)$
 > - Using Markov: $T(n) = O(n \log n) \space \text{with probability } \ge 0.99$
+##### **Randomized Equality Testing (Communication Protocol)**
+> [!NOTE]
+> - Alice holds $n$-bit string $S_A$, Bob holds $n$-bit string $S_B$. Goal: decide if $S_A = S_B$.
+> - Deterministic lower bound: $\Omega(n)$ bits must be communicated (proven below).
+> - Randomized protocol communicates only $O(\log n)$ bits with error $\leq 1/n$.
+> 
+> **Protocol**
+> 1. Let $S$ = set of the $n^2$ smallest prime numbers.
+> 2. Alice samples $p$ from $S$ uniformly at random.
+> 3. Alice sends $p$ and $S_A \bmod p$ to Bob ($O(\log p) \subseteq O(\log n)$ bits, since by Prime Number Theorem $p \in O(n^2 \log n)$).
+> 4. Bob computes $S_B \bmod p$.
+> 5. If $S_A \bmod p = S_B \bmod p$: Bob decides $S_A = S_B$. Otherwise: $S_A \neq S_B$.
+> 
+> **Correctness: error $\leq 1/n$**
+> - Case $S_A = S_B$: $S_A \bmod p = S_B \bmod p$ for all $p$. Always correct. Probability 1.
+> - Case $S_A \neq S_B$: error occurs iff $p$ divides $d = |S_A - S_B|$.
+>     - $1 \leq d < 2^n$ (both are $n$-bit strings).
+>     - Let $k$ = number of distinct prime factors of $d$. Every prime $\geq 2$, so product of $k$ distinct primes $\geq 2^k$. Since $2^k \leq d < 2^n$, we get $k \leq n - 1$.
+>     - $\Pr[\text{error}] = \Pr[p \mid d] \leq \frac{n - 1}{|S|} = \frac{n-1}{n^2} \leq \frac{1}{n}$.
+> - Correct with probability $\geq 1 - 1/n$.
+> - Trade-off: smaller $|S|$ means faster sampling but lower correctness probability. If $|S| = n$ instead of $n^2$, correctness drops to $\approx 1/n$ (almost useless).
+> 
+> **Deterministic lower bound: $\Omega(n)$ bits required**
+> - Proof (one-way communication): there are $2^n$ possible strings $S_A$.
+> - If Alice sends only $n - 1$ bits, there are $2^{n-1}$ possible messages.
+> - By pigeonhole: $\exists$ two distinct strings $X \neq Y$ such that Alice sends the same message for both.
+> - Bob cannot distinguish $S_A = X$ from $S_A = Y$. He must fail on at least one of $(S_A = X, S_B = X)$ or $(S_A = Y, S_B = X)$.
+> - Therefore at least $n$ bits are required. Any deterministic protocol needs $\Omega(n)$ bits.
+> - The randomized protocol achieves $O(\log n)$ bits: **exponential separation** between randomized and deterministic.
+##### **Random Graph Partition (Max-Cut)**
+> [!NOTE]
+> - Given graph $G = (V, E)$ (no self-loops). Partition $V = V_1 \cup V_2$. 
+> - A **cut** is the set of edges crossing $V_1$ and $V_2$. Goal: show the expected cut size.
+> 
+> **Basic random partition: expected cut $= |E|/2$**
+> - Each vertex independently joins $V_1$ with probability $1/2$, else $V_2$.
+> - For each edge $e = \{u, v\}$, let $X_e$ = indicator that $e$ crosses the cut.
+> - $e$ crosses $\iff$ $u$ and $v$ are in different parts. Four equally likely cases:
+>     - $u \in V_1, v \in V_1$: no cross ($1/4$)
+>     - $u \in V_1, v \in V_2$: cross ($1/4$)
+>     - $u \in V_2, v \in V_1$: cross ($1/4$)
+>     - $u \in V_2, v \in V_2$: no cross ($1/4$)
+> - $E[X_e] = 1/2$.
+> - By linearity of expectation: $E[X] = \sum_{e \in E} E[X_e] = |E|/2$.
+> - **Corollary**: any graph admits a cut of size at least $|E|/2$ (since expected value $= |E|/2$, at least one partition achieves it).
+> 
+> **Improvement 1: force one edge -- expected cut $= (|E|+1)/2$**
+> - Pick one edge $e = \{u, v\}$. Force $u^* \in V_1$ and $v^* \in V_2$. All other vertices assigned randomly.
+> - $E[X_e] = \begin{cases} 1 & \text{if } e = e^* \ 1/2 & \text{if } e \neq e^* \end{cases}$
+> - $E[X] = 1 + \frac{|E| - 1}{2} = \frac{|E| + 1}{2}$
+> 
+> **Improvement 2: balanced partition ($|V|$ even) -- expected cut $= \frac{|E|}{2} \cdot \frac{|V|}{|V|-1}$**
+> - Choose $V_1$ uniformly at random from all $\binom{|V|}{|V|/2}$ subsets of size $|V|/2$. Set $V_2 = V \setminus V_1$.
+> - For edge $e = {u, v}$:
+>     - $\Pr(u \in V_1) = \frac{|V|/2}{|V|} = \frac{1}{2}$
+>     - $\Pr(v \in V_2 \mid u \in V_1) = 1 - \frac{|V|/2 - 1}{|V| - 1} = \frac{|V|/2}{|V| - 1}$
+>     - By symmetry (both orderings): $E[X_e] = 2 \cdot \frac{1}{2} \cdot \frac{|V|/2}{|V|-1} = \frac{|V|/2}{|V|-1}$
+> - $E[X] = |E| \cdot \frac{|V|/2}{|V|-1} = \frac{|E|}{2} \cdot \frac{|V|}{|V|-1}$
+> - This is strictly better than $|E|/2$ since $\frac{|V|}{|V|-1} > 1$. Tight for complete graphs.
+> - Intuition: forcing equal-sized parts prevents "lopsided" partitions (e.g., $|V_1| = 1, |V_2| = |V|-1$) that waste edges.
+##### **Random Walk on 4-Point Circle (State-based Probability)**
+
+> [!NOTE]
+> - 4 points $0, 1, 2, 3$ clockwise on a circle. Start at 0 (visited). Each step: jump to adjacent point (clockwise or counterclockwise) with probability $1/2$ each. Continue until all 4 visited.
+> - Question: probability that point 2 is the **last** point visited?
+> - Define states based on current position and visited set:
+>     - $x$ = $\Pr[\text{2 is last} \mid \text{at 0, visited } {0,1}]$
+>     - $y$ = $\Pr[\text{2 is last} \mid \text{at 1, visited } {0,1}]$
+> - From state $x$ (at 0): jump to 3 with prob $1/2$ (then 2 is last) or jump to 1 with prob $1/2$ (enter state $y$): $x = \frac{1}{2} + \frac{y}{2}$
+> - From state $y$ (at 1): jump to 2 with prob $1/2$ (2 is NOT last, since 3 unvisited) or jump to 0 with prob $1/2$ (enter state $x$): $y = \frac{x}{2}$
+> - Solve: substitute $y = x/2$ into first equation: $x = \frac{1}{2} + \frac{x}{4} \Rightarrow x = \frac{2}{3}$, $y = \frac{1}{3}$.
+> - Initial state (at 0, visited ${0}$): jump to 1 with prob $1/2$ (state $y = 1/3$) or jump to 3 with prob $1/2$ (by symmetry, also $1/3$).
+> - Answer: $\frac{1}{2} \cdot \frac{1}{3} + \frac{1}{2} \cdot \frac{1}{3} = \frac{1}{3}$.
+> 
+##### **Independent Set Lower Bound (Random Ordering)**
+
+> [!NOTE]
+> - Undirected simple graph $G = (V, E)$. $d(v)$ = degree of $v$.
+> - Take a uniformly random ordering $v_1, v_2, \ldots, v_n$ of vertices. Define $I = {v_i : \text{all neighbours of } v_i \text{ appear after } v_i}$ (i.e., $v_i$ comes first among itself and its neighbours).
+> - **$I$ is an independent set**: if $u \in I$ and $(u, v) \in E$, then $v$ appears after $u$, so $v \notin I$. No two adjacent vertices can both be in $I$.
+> - **Expected size**: let $X_v = 1$ if $v \in I$. $v \in I$ iff $v$ appears before all $d(v)$ neighbours. Among $v$ and its $d(v)$ neighbours ($d(v) + 1$ vertices total), $v$ is first with probability $\frac{1}{d(v)+1}$. $$E[|I|] = \sum_{v \in V} E[X_v] = \sum_{v \in V} \frac{1}{d(v) + 1}$$
+> - **Existence**: since the expected size equals $\sum_{v \in V} \frac{1}{d(v)+1}$, at least one ordering achieves this size. So there exists an independent set of size $\geq \sum_{v \in V} \frac{1}{d(v)+1}$.
+##### **Expected Input Length (Weighted Geometric Series)**
+> [!NOTE]
+> - $\Pr[\text{input length} = i] = \frac{1}{2^{i+1}}$ for each $i \geq 0$.
+> - $E[i] = \sum_{i \geq 0} i \cdot \frac{1}{2^{i+1}} = \frac{1}{2} \sum_{i \geq 1} \frac{i}{2^i}$
+> - Rewrite: $\sum_{i \geq 1} \frac{i}{2^i} = \sum_{i \geq 1} \sum_{j=0}^{i-1} \frac{1}{2^i}$. Swap summation order (sum over columns $j$ first): $$= \sum_{j \geq 0} \sum_{i \geq j+1} \frac{1}{2^i} = \sum_{j \geq 0} \frac{1}{2^j} \cdot \underbrace{\sum_{i \geq 1} \frac{1}{2^i}}_{=1} = \sum_{j \geq 0} \frac{1}{2^j} = 2$$
+> - $E[i] = \frac{1}{2} \cdot 2 = 1$.
+> - Useful identity: $\sum_{i \geq 1} \frac{i}{r^i} = \frac{r}{(r-1)^2}$ for $r > 1$. Here $r = 2$: $\frac{2}{1} = 2$. Matches.
 
 ##### Two Types of Randomized Algorithms
 **Las Vegas**
@@ -680,9 +1225,12 @@ Conversion:
 - Las Vegas → Monte Carlo possible.
 - Reverse not generally possible.
 
+**Additional notes**
+- For randomised algos, what we argue for is for the worst input. The expectation is only for the algorithm. We analyse for worst input, not the average input
+
 ---
 #### 6. Dynamic Programming
-**Template**
+##### **Template**
 **Optimal Substructure for DP**
 1. Let P be the original problem. Define OPT(P) as the value of an optimal solution.
 2. Let O be an optimal solution to P with cost/value OPT(P).
@@ -708,9 +1256,10 @@ Conversion:
     - **Top-down (memoization):** recursive, store results before returning, no need to care about ordering
     - **Bottom-up (tabulation):** iterative, fill table in order, must determine ordering beforehand
 ##### **Fibonacci**
-- $F(0) = 0, F(1) = 1, F(n) = F(n-1) + F(n-2)$ for $n > 1$
-- Recursive: $\ge 2^{(n-2)/2}$ operations (exponential), recomputes same subproblems
-- Iterative/memoized: $O(n)$ (linear), each subproblem computed once
+> [!NOTE]
+> - $F(0) = 0, F(1) = 1, F(n) = F(n-1) + F(n-2)$ for $n > 1$
+> - Recursive: $\ge 2^{(n-2)/2}$ operations (exponential), recomputes same subproblems
+> - Iterative/memoized: $O(n)$ (linear), each subproblem computed once
 ##### **Longest Common Subsequence**
 > [!NOTE] **Longest Common Subsequence**
 > - **Input:** two sequences $A[1..n]$ and $B[1..m]$
@@ -801,9 +1350,112 @@ Conversion:
 > 
 > - Time: $O(nk)$
 
+ ##### **Convex Polygon Triangulation**
+> [!NOTE]
+>
+> ![[Screenshot 2026-04-20 at 5.27.22 PM.png]]
+> - Given convex polygon with $n$ ($n \geq 2$) vertices labeled $1, 2, \ldots, n$. Triangulate into $n - 2$ triangles.
+> - Triangle $(x, y, z)$ has weight $W(x, y, z)$ (black-box $O(1)$ function).
+> - Objective: minimize total weight of all $n - 2$ triangles.
+> 
+> **Subproblem definition**
+> - $TRI(x, y)$ = minimum weight triangulation of the sub-polygon using vertices $(x, x+1, \ldots, y)$.
+> - Answer: $TRI(1, n)$.
+> 
+> **Recurrence** 
+> - If $y-x=1$: $TRI(x,y) = 0$
+> - Else: $TRI(x,y) = \displaystyle\min_{k \in [x+1, y-1]} \left[ TRI(x, k) + W(x, k, y) + TRI(k, y) \right]$
+> 
+> - Base case: $y - x = 1$ means just two adjacent vertices (a line segment), no triangle possible, cost 0.
+> - Recursive case: fix edge $(x, y)$ as one side of a triangle. Try every $k$ between $x$ and $y$ as the third vertex. This creates triangle $(x, k, y)$ and splits the remaining polygon into two sub-polygons $(x, \ldots, k)$ and $(k, \ldots, y)$.
+> 
+> **Naive recursion: $O(3^n)$**
+> - Recurrence for runtime: $T(n) = \sum_{k=2}^{n-1} [T(k) + T(n-k+1) + c]$.
+> - Expanding $T(n)$ and $T(n-1)$ and subtracting: $$T(n) - T(n-1) = 2T(n-1) + c \implies T(n) = 3T(n-1) + c \implies T(n) \in O(3^n)$$
+> - Exponential because of **many overlapping subproblems**: there are only $O(n^2)$ distinct $(x, y)$ pairs but the naive recursion recomputes them exponentially many times.
+> 
+> **Top-Down DP (memoization): $O(n^3)$**
+> - Create 2D memo table of size $n \times n$, initialized to $-1$.
+> - In $TRI(x, y)$: if $memo[x][y] \neq -1$, return it. Otherwise compute, store in $memo[x][y]$, and return.
+> - $O(n^2)$ distinct subproblems, each computed once in $O(n)$ (iterating over $k$).
+> - Total: $O(n^2 \times n) = O(n^3)$.
+> 
+> **Bottom-Up DP (tabulation): $O(n^3)$**
+> - Same $n \times n$ table, but must fill in correct order.
+> - $TRI(x, y)$ depends on $TRI(x, k)$ and $TRI(k, y)$ for all $k$ between $x$ and $y$, i.e., all entries in the same row to the left and same column below. These are all sub-polygons with fewer vertices.
+> - Correct fill order: **anti-diagonally** by increasing gap $\Delta = y - x$. Base case sits at $\Delta = 1$, then fill $\Delta = 2, 3, \ldots, n-1$.
+> 
+> ```
+> // Base case: Δ = 1 (adjacent vertices, no triangle)
+> for each x in [1..n-1]:
+>     TRI[x][x+1] = 0
+> 
+> // Recursive case: fill anti-diagonally
+> for each Δ in [2..n-1]:
+>     for each x in [1..n-1-Δ]:
+>         y = x + Δ
+>         TRI[x][y] = ∞
+>         for each k in [x+1..y-1]:
+>             TRI[x][y] = min(TRI[x][y], TRI[x][k] + W(x,k,y) + TRI[k][y])
+> 
+> return TRI[1][n]
+> ```
+> - Three nested loops $\Rightarrow O(n^3)$ time. $O(n^2)$ space.
+> - Same asymptotic complexity as top-down. Bottom-up avoids recursion overhead but requires figuring out the fill order.
+> 
+> **Why anti-diagonal fill order?**
+> - When computing $TRI[x][y]$ with gap $\Delta$, all needed subproblems $TRI[x][k]$ and $TRI[k][y]$ have gap $< \Delta$ (since $k$ is strictly between $x$ and $y$). So processing by increasing $\Delta$ guarantees all dependencies are already computed.
+> - This is unlike typical 2D DP where row-by-row left-to-right works. Here the dependency structure follows the DAG's topological order along anti-diagonals.
+> 
+> **Connection to Matrix Chain Multiplication**
+> - Same recurrence structure. Matrix chain: $M(i, j) = \min_{k} [M(i,k) + M(k+1,j) + p_{i-1}p_k p_j]$. Both are interval DP problems with $O(n^2)$ subproblems, $O(n)$ choices per subproblem, $O(n^3)$ total.
+##### **Min Difference $|S_X - 2 S_Y|$ (Subset Sum variant)**
+> [!NOTE]
+> - **Problem:** Partition indices into $X, Y$ to minimize $|\sum_{i \in X} A[i] - 2 \sum_{i \in Y} A[i]|$
+> - **Key insight:** Let $S = \sum A[i]$, $t = \sum_{i \in Y} A[i]$. Then $$|S_X - 2S_Y| = |(S-t) - 2t| = |S - 3t| = 3 \cdot |S/3 - t|$$
+> - **Reduction:** Find subset sum $t$ closest to $S/3$ → standard subset-sum DP
+> - **State:** $m[p, k] = 1$ iff some subset of $A[1..k]$ sums to $p$
+> - **Recurrence:**
+> 
+> $$m[p, k] = \begin{cases} 1 & k=0, p=0 \ 0 & k=0, p \neq 0 \ \max{m[p, k-1],\ m[p - A[k], k-1]} & k > 0,\ p \geq A[k] \ m[p, k-1] & \text{otherwise} \end{cases}$$
+> 
+> - **Answer:** Scan $m[p, n]$ for $p$ closest to $S/3$ with $m[p,n]=1$, return $|S - 3p|$
+> - **Order:** Fill by increasing $k$ (each layer depends only on $k-1$)
+> - **Complexity:** $O(n^2 M)$ time, since $S \leq nM$
+> 
+> > **Trick to remember:** Whenever you see "minimize weird linear combination of two subset sums," try to algebraically reduce to "find subset sum closest to some target." It's almost always subset-sum DP underneath.
+
+ ##### **Max Sum, No Two Adjacent (House Robber)**
+> [!NOTE]
+> - **Problem:** Pick subset of $A[1..n]$ with no two adjacent indices, maximize sum (empty set allowed, sum $= 0$)
+> - **State:** $m[i] =$ max sum using elements from $A[1..i]$ with no two adjacent
+> - **Choice at index $i$:** include $A[i]$ (then skip $i-1$) or exclude $A[i]$
+> - **Recurrence:**
+> 
+> $$m[i] = \begin{cases} 0 & i = 0 \ \max{0, A[1]} & i = 1 \ \max{m[i-2] + A[i],\ m[i-1]} & \text{otherwise} \end{cases}$$
+> 
+> - **Answer:** $m[n]$
+> - **Complexity:** $O(n)$ time, $O(1)$ space (only need last two values)
+> 
+> > **Why $\max{0, A[1]}$ for base case?** Elements can be negative, so empty subset (value 0) might beat including $A[1]$.
+##### **Knapsack with Item Count Cap (≤ R items)**
+> [!NOTE]
+> - **Problem:** Standard 0/1 knapsack but additionally pick **at most $R$ items**
+> - **State:** $m[i, j, k] =$ max value using first $i$ items, weight $\leq j$, count $\leq k$
+> - **Recurrence:**
+> 
+> $$m[i, j, k] = \begin{cases} 0 & i=0 \lor j=0 \lor k=0 \ \max{m[i-1, j-w_i, k-1] + v_i,\ m[i-1, j, k]} & w_i \leq j \ m[i-1, j, k] & \text{otherwise} \end{cases}$$
+> 
+> - **Answer:** $m[n, W, R]$
+> - **Order:** Fill by increasing $i$ (each layer depends only on $i-1$)
+> - **Complexity:** $O(nWR)$ time
+> 
+> > **Pattern:** When you see "do problem $P$ but with an extra constraint $\leq C$," add a dimension to the DP state tracking that constraint and decrement it on every "take" transition.
+> 
+
 ---
 #### 7. Greedy
-**Template**
+##### **Template**
 **Greedy Choice Property**
 1. Let O be any optimal solution to problem P. Let g be the greedy choice.
 2. Case 1: O begins with g. Then an optimal solution beginning with g exists. Done.
@@ -958,6 +1610,80 @@ Conversion:
 >     Replace node a_{1,2} with two children a1 and a2
 > ```
 > - Implementation: use a min-heap (priority queue) for efficient extraction of two minimum-frequency nodes. Time: $O(n \log n)$.
+##### **Burning CDs**
+> [!NOTE]
+> - $n$ music files, each $< 100$ MB. Each CD holds 100 MB and **at most 2 files**. Files cannot be split. Minimize number of CDs.
+> 
+> **Optimal substructure**
+> - For any pair $f_1, f_2$ that share a CD in an optimal solution: $MinCD(A) = 1 + MinCD(A \setminus {f_1, f_2})$.
+> - Proof (cut-and-paste): remove the pair from the first CD. Remaining must be optimal, else replacing it with a better allocation contradicts optimality of the original.
+> - Note: you cannot just pair **any** two files, nor always pair smallest + largest (largest + smallest may exceed 100 MB).
+> 
+> > **Counterexample (pairing smallest + largest blindly)**: $A = {10, 20, 30, 95, 99}$. Smallest $= 10$, largest $= 99$, sum $= 109 > 100$. Does not fit. Optimal is ${10, 20}, {30}, {95}, {99}$ = 4 CDs.
+> 
+> **Greedy-choice property (two parts)**
+> 
+> _Part 1: smallest file can always be in a pair (if any pair exists in OPT)._
+> - If smallest file $f$ is already paired in OPT, done.
+> - If not, $f$ is alone. Some other pair ${a, b}$ exists in OPT. Swap $f$ with $a$. Since $\text{size}(f) \leq \text{size}(a)$ and $a + b \leq 100$, we get $f + b \leq 100$. Also $a \leq 100$ so $a$ alone on a CD is fine. Total CDs unchanged. Exchange argument works.
+> 
+> _Part 2: smallest file $f_1$ can be paired with the largest file $f_2$ that fits with it._
+> - From Part 1, some OPT has $f_1$ in a pair. If $f_1$ is paired with some $f_3 \neq f_2$, swap $f_3$ with $f_2$:
+>     - If $f_2$ was unpaired: ${f_1, f_2}$ fits (since $f_2$ is the largest that fits with $f_1$), $f_3$ goes alone. No extra CDs.
+>     - If $f_2$ was paired with $f_4$: before swap ${f_1, f_3}$ and ${f_2, f_4}$. After swap ${f_1, f_2}$ and ${f_3, f_4}$. Since $f_2 > f_3$ and $f_2 + f_4 \leq 100$, we get $f_3 + f_4 \leq 100$. Still 2 CDs.
+> - Note: pairing smallest with **largest overall** (not largest that fits) is **wrong**.
+> 
+> **Algorithm**
+> 1. Sort file sizes. (Can use counting sort in $O(n)$ if sizes are small integers in $[0..100]$.)
+> 2. Two pointers: `lo = 0` (smallest), `hi = n-1` (largest).
+> 3. While `lo <= hi`:
+>     - If $A[lo] + A[hi] \leq 100$: pair them on one CD, advance `lo`, retreat `hi`.
+>     - Else: $A[hi]$ alone on one CD, retreat `hi` only.
+> 4. Return total CDs used.
+> 
+> - Time: $O(n \log n)$ for sort, $O(n)$ for two-pointer pass.
+> 
+> 
+##### **Activity Selection**
+> [!NOTE]
+> - $n$ activities $S = {a_1, \ldots, a_n}$, each with interval $[s_i, f_i)$ (start inclusive, finish exclusive).
+> - Two activities compatible iff $s_i \geq f_j$ or $s_j \geq f_i$ (no overlap).
+> - Goal: find the **largest** subset of mutually compatible activities.
+> 
+> **Which greedy strategies work?**
+> - **Starts last**: Correct. Proven below.
+> - **Ends last**: Wrong.
+>     - Counterexample: $a_1 = [1, 10), a_2 = [1, 5), a_3 = [6, 9)$. $a_1$ ends last, picked, blocks everything. Optimal: ${a_2, a_3}$.
+> - **Shortest activity**: Wrong.
+>     - Counterexample: $a_1 = [1, 4), a_2 = [3, 5), a_3 = [4, 10)$. $a_2$ is shortest, picked, blocks everything. Optimal: ${a_1, a_3}$.
+> - (Equivalent correct strategy from CLRS: **ends first**, which is the mirror of starts last.)
+> 
+> **Optimal substructure**
+> - If optimal schedule $S$ contains activity $a_j$, define:
+>     - $Before_j = {a_i : f_i \leq s_j}$ (finish before $a_j$ starts)
+>     - $After_j = {a_i : s_i \geq f_j}$ (start after $a_j$ finishes)
+> - $S$ must also contain optimal schedules for $Before_j$ and $After_j$. Proof by contradiction (cut-and-paste): if either sub-schedule were suboptimal, replacing it gives a better overall schedule, contradicting optimality of $S$.
+> 
+> **Greedy-choice property (starts last)**
+> - Let $a^*$ be the activity with the latest start time overall. Let $a$ be the activity with the latest start time in some optimal solution $S$.
+> - Exchange argument: replace $a$ with $a$ in $S$. Since $s_{a} \geq s_a$, activity $a$ starts no earlier than $a$, so it cannot conflict with anything that $a$ did not conflict with. Schedule remains compatible, same size. So the modified schedule with $a$ is also optimal.
+> 
+> **Algorithm**
+> 1. Sort activities by start time in non-decreasing order: $O(n \log n)$.
+> 2. Initialize empty schedule $S$.
+> 3. Iterate in **reverse** order (latest start first):
+>     - Select $a^*$ = latest-starting activity compatible with current $S$.
+>     - Add $a^*$ to $S$.
+> 4. Return $S$.
+> 
+> - After sorting, the greedy pass is $O(n)$. Total: $O(n \log n)$.
+> 
+> > **Example**: $a_1 = [3, 10), a_2 = [15, 20), a_3 = [5, 15)$.
+> > 
+> > - Sorted by start time: $a_1 = [3, 10), a_3 = [5, 15), a_2 = [15, 20)$.
+> > - Reverse iteration: pick $a_2$ (starts at 15). Then $a_3$ conflicts ($f_3 = 15$, $s_{a_2} = 15$, compatible? $15 \geq 15$ yes). Actually $a_1$: $f_1 = 10 \leq 15$, compatible. Pick $a_1$.
+> > - Result: ${a_1, a_2}$, size 2. Optimal.
+> 
 
 ---
 #### 8. Amortized Analysis
@@ -1098,6 +1824,16 @@ Conversion:
 > - $\phi^+(t) = O(\log n)$ (Union changes one root pointer; $\phi$ increases by at most $\log n$)
 > - $\phi(0)=0,\ \phi(t) \geq 0 \Rightarrow \sum_{t=1}^{T}\phi^+(t) \geq \sum_{t=1}^{T}\phi^-(t)$
 > - $\sum_{t=1}^{T}\text{Cost}(t) = O(T\log n) + O!\left(\sum\phi^-(t)\right) = O(T\log n) + O!\left(\sum\phi^+(t)\right) = O(T\log n)$
+##### Example Question
+> [!NOTE]
+> **Problem**
+> - Suppose we perform a sequence of $n$ operations
+> - The $i$-th operation costs $i^2$ if $i$ is a power of 2, and costs 1 otherwise.
+> - What is the asymptotic amortized cost per operation?
+> 
+> **Answer**
+> - $\Theta(n^2)$: The sum is at least $n^2$
+
 ##### **Amortized Analysis Summary**
 - Amortized costs provide a clean abstraction of data-structure performance.
 - All 3 methods are valid; aggregate is simplest, accounting and potential are more precise.
@@ -1121,7 +1857,7 @@ Conversion:
 - $A \le_P B$ means $A$ is no harder than $B$ (equivalently, $B$ is at least as hard as $A$)
 - Does NOT mean $B \le_P A$. The mapping is one-way: for every $\alpha$ there exists a $\beta$, but not necessarily the reverse
 - Transitivity: $A \le_P B, B \le_P C \implies A \le_P C$
-
+##### **Matrix Squaring  $\le_P$  Matrix Multiplication**
 > [!NOTE]
 > **Matrix Squaring $\le_P$ Matrix Multiplication**
 > - Input: matrix $C$, want $C^2$
@@ -1148,6 +1884,8 @@ Conversion:
     - Input size is $O(n \log W + \log W)$ since each number takes $\Theta(\log W)$ bits
     - $W$ can be exponential in input length (e.g. $W = 2^{\log W}$), so $O(nW)$ is not polynomial in input size
 - Fractional Knapsack runs in $O(n \log n)$, which is polynomial in input size
+- If input is a number n, then input size is $\log{n}$
+- If input is n numbers, then input size is n
 ##### **Decision Problems**
 - A decision problem maps an instance to ${\text{YES}, \text{NO}}$
 - Any optimisation problem can be converted to a decision problem: "is there a solution with value $\le k$?" (minimisation) or "$\ge k$?" (maximisation)
@@ -1171,7 +1909,7 @@ Conversion:
 ##### **Set cover** 
 - Given a universe of elements and a collection of subsets, a selection of subsets whose union covers the entire universe.
 - **Vertex cover => Set cover:** Treat each vertex as a set of incident edges; selecting vertices that cover all edges becomes selecting sets that cover the universe of edges.
-
+##### **3-SAT $\le_P$ Independent-Set**
 > [!NOTE] **3-SAT $\le_P$ Independent-Set**
 > 
 > **Reduction:**
@@ -1194,7 +1932,7 @@ Conversion:
 > - One true literal per clause means every clause is satisfied, so $\phi$ is satisfiable.
 
 ![[Screenshot 2026-03-29 at 4.53.29 PM.png]]
-
+##### Independent-Set $\le_P$ Vertex-Cover
 > [!NOTE] **Independent-Set $\le_P$ Vertex-Cover**
 > 
 > **Reduction:** Given $(G, k)$ for Independent-Set, output $(G, n - k)$ for Vertex-Cover, where $n = |V|$.
@@ -1213,6 +1951,7 @@ Conversion:
 > - If $(u, v) \in E$ with both $u, v \in V \setminus S$, then $S$ does not cover $(u, v)$. Contradiction.
 > - So no two vertices in $V \setminus S$ are adjacent, i.e. $V \setminus S$ is an independent set.
 
+##### Vertex-Cover $\le_P$ Set-Cover
 > [!NOTE] **Vertex-Cover $\le_P$ Set-Cover**
 > 
 > **Reduction:** Given $(G, k)$ for Vertex-Cover, construct Set-Cover instance $(n, k', \mathcal{S})$:
@@ -1237,6 +1976,47 @@ Conversion:
 > 
 > - Each $S_{v_j}$ corresponds to vertex $v_j$, and their union covers all elements (edges).
 > - So ${v_1, \dots, v_t}$ is a vertex cover of size $\le k$.
+**Reductions Cheatsheet**
+
+##### **Reduction: Partition $\leq_P$ Knapsack**
+> [!NOTE]
+> **Partition**: given positive integers ${w_1, \ldots, w_n}$ with total sum $S$, can they be split into two subsets of equal sum $S/2$?
+> 
+> **Knapsack (decision)**: given items with weights and values, capacity $W$, threshold $V$, is there a subset with weight $\leq W$ and value $\geq V$?
+> 
+> **Transformation**: from Partition instance ${w_1, \ldots, w_n}$, construct Knapsack instance with items ${(w_i, w_i)}$ (weight = value = $w_i$), capacity $W = S/2$, threshold $V = S/2$. Runs in $O(n)$.
+> 
+> $(\Rightarrow)$: if Partition is YES, subset $S_1$ sums to $S/2$. Use $S_1$ for Knapsack: weight $= S/2 \leq W$, value $= S/2 \geq V$. Knapsack YES.
+> 
+> $(\Leftarrow)$: if Knapsack is YES, subset $Z$ has weight $\leq S/2$ and value $\geq S/2$. Since weight = value for each item, the only possibility is weight = value = exactly $S/2$. So $Z$ and its complement partition the original set into equal sums. Partition YES.
+##### **Reduction: Partition $\not\leq_P$ Ball-Partition (WRONG reduction)**
+> [!NOTE]
+> **Ball-Partition**: given $k$ balls, can they be divided into two boxes with equal count?
+> 
+> **Attempted transformation**: given Partition instance $S$, let $k = \sum S$.
+> 
+> **Why it fails**: $(\Leftarrow)$ direction breaks. $S = {1, 7}$, sum $= 8$. Ball-Partition with $k=8$: YES (split ${4,4}$). But Partition: NO (${1}$ vs ${7}$ are not equal). A YES for Ball-Partition does not imply YES for Partition.
+> 
+> The $(\Rightarrow)$ direction does work: if Partition is YES with two subsets summing to $S/2$ each, then $k = S$ is even and Ball-Partition is YES. But a reduction needs **both** directions.
+##### **Reduction: Hamiltonian-Cycle $\leq_P$ TSP**
+> [!NOTE]
+> **HC**: given graph $G = (V, E)$, does $G$ have a cycle visiting every vertex exactly once?
+> 
+> **TSP (decision)**: given complete weighted graph, is there a tour of cost $\leq C$?
+> 
+> **Transformation**: from HC instance $G = (V, E)$, construct complete graph $G'$ on same vertices $V$:
+> 
+> - If $(u, v) \in E$: $w(u, v) = 1$
+> - If $(u, v) \notin E$: $w(u, v) = 2$
+> - Set threshold $C = n = |V|$.
+> - Runs in $O(n^2)$ (at most $n(n-1)/2$ edges).
+> 
+> **Claim**: $G$ has a Hamiltonian cycle iff $G'$ has a TSP tour of cost $\leq n$.
+> 
+> $(\Rightarrow)$: if $G$ has HC $C$, then $C$ exists in $G'$ (since $G$ is a subgraph of complete $G'$). $C$ has $n$ edges, each with weight 1 in $G'$ (since they were in $E$). Total cost $= n$. TSP YES.
+> 
+> $(\Leftarrow)$: if $G'$ has tour $C$ of cost $\leq n$, then $C$ has $n$ edges. Each edge has weight $\geq 1$, so $n$ edges with total $\leq n$ means every edge has weight exactly 1. Weight 1 edges correspond to edges in $E$. So $C$ is a Hamiltonian cycle in $G$. HC YES.
+
 ##### **NP-Completeness**
 - $P$: class of decision problems solvable in polynomial time
 - $NP$: class of decision problems where a proposed solution can be **verified** in polynomial time
@@ -1247,7 +2027,11 @@ Conversion:
     2. Every problem in $NP$ reduces to $X$ in poly-time ($\forall A \in NP, A \le_P X$)
 - All NP-complete problems reduce to each other: $A \le_P B \le_P C \le_P \dots \le_P A$
 - If any one NP-complete problem has a poly-time algorithm, then $P = NP$ and all of them do
-- No poly-time algorithm is known for any NP-complete problem; this is the strongest evidence that $P \ne NP$
+- No poly-time algorithm is known for any NP-complete problem; this is the strongest evidence that $P \ne NP$\
+##### **Additional notes**
+1. Fractional knapsack can be poly-time reduced to knapsack: True. Fractional knapsack has poly-time algorithm. Any poly-time algorithm can be reduced to any problem.
+2. Knapsack can be poly-time reduced to Fractional-Knapsack: We don't know if it's true or false. If P=NP then it's true, else false.
+3. Knapsack can be poly-time reduced to 3-SAT: True. Knapsack is an NP problem. Any NP problem can be reduced to 3-SAT.
 
 ---
 #### 10. Reductions and Intractability II
@@ -1266,22 +2050,43 @@ Conversion:
 - Equivalently: problems solvable in poly-time by a non-deterministic Turing machine.
 - NP captures natural search problems — "we know we have the needle when we see it."
 
-**Example: Subset-Sum in NP**
+##### **Subset-Sum is NP-Complete**
 > [!NOTE]
-> 
-> 
-> - Problem: given list of integers $S$ and target $t$, decide if $\exists S' \subseteq S$ summing to $t$.
+> _Step 1: Subset-Sum is in NP_
+> - Problem: given set of integers $S$ and target $t$, is there $S' \subseteq S$ with $\sum_{s \in S'} s = t$?
 > - Certificate: the subset $S'$ itself.
-> - Verifier: check whether sum of elements of $S'$ equals $t$ in poly-time.
-> - Hence Subset-Sum is in NP.
-
-**Example: Ham-Cycle in NP**
-> [!NOTE]
+> - Verifier: sum elements of $S'$, check if equal to $t$. Poly-time.
 > 
-> - Problem: given graph $G$, decide whether there is a simple cycle visiting each vertex once.
-> - Certificate: the cycle itself.
-> - Verifier: check in poly-time whether it is a cycle and visits each vertex once.
-> - Hence Ham-Cycle is in NP.
+> _Step 2: Subset-Sum is NP-Hard (reduce from 3-SAT)_
+> - Given 3-SAT instance $\Phi$ with $n$ variables $x_1, \ldots, x_n$ and $m$ clauses $C_1, \ldots, C_m$, construct a Subset-Sum instance.
+> - For each variable $x_i$, create two numbers $v_i$ (for $x_i = T$) and $v_i'$ (for $x_i = F$).
+> - For each clause $C_j$, create two "slack" numbers $s_j$ and $s_j'$.
+> - Numbers are encoded in base 10 with $n + m$ digits (one column per variable, one column per clause). This avoids carry issues.
+> - Variable digit columns ($i$-th column): $v_i$ and $v_i'$ both have a 1 in column $i$, all other variable numbers have 0 in column $i$.
+> - Clause digit columns ($j$-th column): if literal $x_i$ appears in $C_j$, then $v_i$ has a 1 in clause column $j$. If $\bar{x_i}$ appears in $C_j$, then $v_i'$ has a 1 in clause column $j$. Slack $s_j$ has 1 in column $j$, $s_j'$ has 2 in column $j$ (or $s_j = 1, s_j' = 1$, depending on formulation).
+> - Target $t$: has 1 in every variable column (exactly one of $v_i, v_i'$ chosen per variable) and 4 in every clause column (3 from literals + slacks fill up to 4).
+> - Reduction is poly-time: $O(nm)$ to construct.
+> - $(\Rightarrow)$: satisfying assignment picks $v_i$ or $v_i'$ per variable. Each clause has 1-3 true literals contributing 1-3 in its column. Slacks fill the remaining to reach 4.
+> - $(\Leftarrow)$: target forces exactly one of $v_i, v_i'$ per variable (variable columns sum to 1). Clause columns sum to 4, and slacks contribute at most 3, so at least 1 must come from a literal, meaning each clause is satisfied.
+
+##### **Ham-Cycle (undirected) is NP-Complete**
+> [!NOTE]
+> _Step 1: Ham-Cycle is in NP_
+> 
+> - Problem: given undirected graph $G$, is there a simple cycle visiting every vertex exactly once?
+> - Certificate: the cycle itself (sequence of vertices).
+> - Verifier: check (1) all $n$ vertices appear exactly once, (2) consecutive vertices (and last-to-first) are connected by edges in $G$. Poly-time.
+> 
+> _Step 2: Ham-Cycle is NP-Hard (reduce from Directed-Ham-Cycle)_
+> 
+> - Given directed graph $G = (V, E)$ with $n$ vertices, construct undirected graph $G'$ such that $G$ has a directed Hamiltonian cycle iff $G'$ has an undirected Hamiltonian cycle.
+> - **Construction**: replace each vertex $v \in V$ with 3 vertices $v_{in}, v_{mid}, v_{out}$:
+>     - Add undirected edges $(v_{in}, v_{mid})$ and $(v_{mid}, v_{out})$. This forms a short path $v_{in} - v_{mid} - v_{out}$.
+>     - For each directed edge $(u, v) \in E$: add undirected edge $(u_{out}, v_{in})$.
+> - $|V'| = 3n$, $|E'| = 2n + |E|$. Poly-time construction.
+> - Key property: $v_{mid}$ has degree exactly 2 (connected only to $v_{in}$ and $v_{out}$), so any Hamiltonian cycle must traverse $v_{in} - v_{mid} - v_{out}$ in order. This enforces a direction.
+> - $(\Rightarrow)$: if $G$ has directed HC $u_1 \to u_2 \to \cdots \to u_n \to u_1$, then $G'$ has undirected HC: $u_{1,in} - u_{1,mid} - u_{1,out} - u_{2,in} - u_{2,mid} - u_{2,out} - \cdots - u_{n,out} - u_{1,in}$.
+> - $(\Leftarrow)$: if $G'$ has undirected HC, the degree-2 constraint on each $v_{mid}$ forces the cycle through each gadget as $v_{in} - v_{mid} - v_{out}$. Reading off the order of gadgets visited gives a directed HC in $G$. The direction is determined because the cycle must enter via $v_{in}$ and exit via $v_{out}$ (entering via $v_{out}$ would require leaving via $v_{in}$, which also gives a valid directed cycle in the reverse reading).
 
 **P $\subseteq$ NP**
 - Any problem in P is in NP. The certificate can be anything. Verifier $V(x, \cdot)$ ignores the certificate, solves for instance $x$ by itself in poly-time, and checks if $x$ is a YES-instance.
@@ -1307,8 +2112,7 @@ Conversion:
     - Show reduction runs in poly-time.
     - $(\Rightarrow)$: YES-instance of known problem $\Rightarrow$ YES-instance of new problem.
     - $(\Leftarrow)$: YES-instance of new problem $\Rightarrow$ YES-instance of known problem.
-
-**Clique is NP-Complete**
+##### **Clique is NP-Complete**
 > [!NOTE]
 > - Problem: given graph $G = (V, E)$ and integer $k$, is there a subset of $k$ (or more) vertices such that there is an edge between each pair of vertices?
 > - Step 1 (in NP): certificate is the $k$ vertices such that the induced subgraph is a clique. Verify in $O(k^2)$ time.
@@ -1323,8 +2127,7 @@ Conversion:
 >     1. Reduction runs in poly-time: converting $G$ to $\bar{G}$ takes $O(n^2)$ time.
 >     2. $(\Rightarrow)$: if $G$ has an independent set of size $k$, no edge between any pair of these vertices. Therefore there is an edge between each pair in $\bar{G}$ $\Rightarrow$ clique of size $k$ in $\bar{G}$.
 >     3. $(\Leftarrow)$: if $\bar{G}$ has a clique of size $k$, there is an edge between each pair of these vertices in $\bar{G}$. Therefore no edge between any pair in $G$ $\Rightarrow$ independent set of size $k$ in $G$.
-
-**Find-Family is NP-Complete**
+##### **Find-Family is NP-Complete**
 > [!NOTE]
 > - **Bipartite graph** $G = (L \cup R, E)$: two disjoint vertex sets $L$ and $R$, every edge has one endpoint in $L$ and one in $R$.
 > - **Siblings**: a pair $u, v \in L$ are siblings if $\exists r \in R$ such that both $(u, r)$ and $(r, v)$ are edges (i.e., $u$ and $v$ share a common neighbour in $R$).
@@ -1333,7 +2136,7 @@ Conversion:
 > - **Find-Family**: given bipartite graph $G = (L \cup R, E)$ and integer $k$, is there a family of size $\geq k$?
 > **Example**: $L = {0, 2, 4}$, $R = {1, 3}$. Edges: $(0,1), (2,1), (2,3), (4,3)$. Here 0 and 2 are siblings (share $r=1$), 2 and 4 are siblings (share $r=3$), but ${0, 2, 4}$ is not a family since 0 and 4 are not siblings (share no common $r$).
 > 
-> - Step 1 (in NP): certificate is the subset $F \subseteq L$ with $|F| \geq k$. Verifier checks for every pair $u, v \in F$ whether $\exists r \in R$ adjacent to both. Polynomial time. Hence Find-Family is in NP.
+> - Step 1 (in NP): certificate is the subset $F \subseteq L$ with $|F| \geq k$. Verifier checks for every pair $u, v \in F$ whether $\exists r \in R$ adjacent to both. Polynomial time. Hence Find-Family is in NP. This verification runs in $O(|F|^2 \cdot |R|) \in O(|L|^2 \cdot |R|)$, poly-time w.r.t. input size 
 > - Step 2 (NP-Hard): reduce from Clique.
 > 
 > **Reduction: Clique $\leq_P$ Find-Family**
@@ -1353,8 +2156,7 @@ Conversion:
 > 3. $(\Leftarrow)$: suppose $F \subseteq L$ is a family of size $\geq k$. For every distinct $u, v \in F$, $\exists r_e \in R$ adjacent to both. By construction, this is only possible if $e = {u, v} \in E$. So every pair in $F$ is adjacent in $G$ $\Rightarrow$ $F$ is a clique of size $\geq k$ in $G$.
 > 
 > Hence Clique $\leq_P$ Find-Family. Since Clique is NP-Complete, Find-Family is NP-Hard. Combined with Step 1, Find-Family is NP-Complete.
-
-**Directed Ham-Cycle is NP-Complete**
+##### **Directed Ham-Cycle is NP-Complete**
 > [!NOTE]
 > - Problem: given a directed graph $G$, decide whether there is a simple cycle visiting each vertex once.
 > - Step 1 (in NP): certificate is the cycle itself. Verifier checks in poly-time whether it is a cycle and visits each vertex once.
@@ -1385,8 +2187,7 @@ Conversion:
 
 ![[Screenshot 2026-04-11 at 10.48.03 PM.png]]
 ![[Screenshot 2026-04-11 at 10.48.59 PM.png]]
-
-**Fantastic-Half is NP-Complete**
+##### **Fantastic-Half is NP-Complete**
 > [!NOTE]
 > - Problem: given non-negative integers $a_1, \ldots, a_n$ (sum $A$) and $b_1, \ldots, b_n$ (sum $B$), decide if $\exists S \subseteq {1, \ldots, n}$ of size $n/2$ such that $\sum_{i \in S} a_i \geq A/2$ and $\sum_{i \in S} b_i \geq B/2$.
 > - Step 1 (in NP): certificate is the set $S$ itself. Verifier checks in poly-time whether $|S| = n/2$, $\sum_{i \in S} a_i \geq A/2$, and $\sum_{i \in S} b_i \geq B/2$.
@@ -1413,7 +2214,7 @@ Conversion:
 > - $(\Rightarrow)$: if $I$ is YES for Partition-Special, $|S| = n/2$ and $\sum_{i \in S} x_i = X/2$. Then $\sum_{i \in S} a_i = X/2 = A/2$ and $\sum_{i \in S} b_i = \frac{n}{2}X - X/2 = (nX - X)/2 = B/2$. Both satisfied. $I'$ is YES for Fantastic-Half.
 > - $(\Leftarrow)$: if $I'$ is YES for Fantastic-Half, $\sum_{i \in S} a_i \geq A/2 \Rightarrow \sum_{i \in S} x_i \geq X/2$. From $b_i$ constraint: $\sum_{i \in S}(X - x_i) \geq B/2 \Rightarrow \frac{n}{2}X - \sum_{i \in S} x_i \geq \frac{(n-1)X}{2} \Rightarrow \sum_{i \in S} x_i \leq X/2$. Combined: $\sum_{i \in S} x_i = X/2$. This is exactly equal partition. $I$ is YES for Partition-Special.
 
-**Partition-Special is NP-Complete**
+##### **Partition-Special is NP-Complete**
 > [!NOTE]
 > - Problem: given non-negative integers $x_1, \ldots, x_n$, decide if they can be partitioned into two parts of equal size and equal sum.
 >     
@@ -1437,8 +2238,7 @@ Conversion:
 > - $(\Rightarrow)$: if Partition is YES, $\exists$ subset of ${x_1, \ldots, x_n}$ summing to $X/2$. Put those doubled values plus one copy of $X+1$ into $S$. Both size and sum conditions of Partition-Special are met.
 > - $(\Leftarrow)$: if Partition-Special is YES for $I'$, by above the two $X+1$ elements are split, and $\sum_{i \in S, i \leq n} x_i = X/2$. So the original $x_i$ are partitioned with equal sum. Partition is YES.
 > - Reduction runs in poly-time ($O(n)$ construction).
-
-**Subset-Sum is NP-complete (using 3-SAT)**
+##### **Subset-Sum is NP-complete (using 3-SAT)**
 > [!NOTE]
 > **Step 1: Find a reduction**
 > We reduce from 3-SAT. Given a 3-CNF formula with variables $x_1, \dots, x_n$ and clauses $C_1, \dots, C_m$, construct a SUBSET-SUM instance as follows:
@@ -1498,3 +2298,160 @@ Conversion:
 - Transitivity of reductions: if $A \leq_P B$ and $B \leq_P C$, then $A \leq_P C$.
 - Core design challenge in reductions: match the structure of the target problem. When target uses $\geq$ but source needs $=$, create two opposing constraints that squeeze to equality.
 - NP-Hard does not require being in NP. NP-Complete = NP $\cap$ NP-Hard.
+---
+#### 11. Approximation Algorithms by Greedy
+
+**Overview**
+- For NP-Complete problems, no known poly-time exact algorithm exists. Instead, use a greedy approximation: not optimal, but provably close.
+- Key insight: greedy uses only **local information** at each step instead of exploring all subproblems.
+
+**Approximation Algorithm Definition**
+- Given optimisation problem and $\alpha \geq 1$, algorithm $\mathcal{A}$ is an $\alpha$-approximation algorithm if for any instance $I$:
+    - Minimization: $OPT \leq \mathcal{A}(I) \leq \alpha \cdot OPT$
+    - Maximization: $\frac{OPT}{\alpha} \leq \mathcal{A}(I) \leq OPT$
+- $\alpha$ is the **approximation ratio**. Smaller $\alpha$ means closer to optimal.
+##### **Set-Cover**
+> [!NOTE]
+> - Problem: given collection $\mathcal{S}$ of subsets of ${1, \ldots, n}$, choose the fewest subsets whose union equals ${1, \ldots, n}$.
+> - Set-Cover is NP-Complete. No known poly-time exact algorithm.
+> - **Greedy choice**: at each step, pick the set that covers the largest number of currently uncovered elements.
+> 
+> **Example**: 12 elements in a $3 \times 4$ grid. $S_1, S_2$ cover columns, $S_3, S_4, S_5$ cover rows.
+> 
+> - Greedy: picks ${S_1, S_2, S_3, S_4, S_5}$ (5 sets, picks columns first then rows).
+> - Optimal: ${S_3, S_4, S_5}$ (3 sets, just rows cover everything).
+> - Greedy is suboptimal here but still within $O(\log n)$ factor.
+> 
+> **Analysis of Greedy Set-Cover**
+> - Suppose there are $\ell$ uncovered elements. $OPT$ sets can cover all elements, so at least one set covers $\geq \lceil \ell / OPT \rceil$ uncovered elements.
+> - After this round, at most $\left(1 - \frac{1}{OPT}\right)\ell$ elements remain.
+> - After $k$ rounds, at most $\left(1 - \frac{1}{OPT}\right)^k n$ elements remain.
+> - After $O(OPT)$ rounds: $\left(1 - \frac{1}{OPT}\right)^{OPT} n \approx \frac{n}{e}$ elements remain (using $(1 - \frac{1}{n})^n \approx \frac{1}{e}$).
+> - After $O(\log n \cdot OPT)$ rounds: at most $\left\lfloor \frac{n}{e^x} \right\rfloor$ elements remain where $e^x \geq n$, so 0 elements remain.
+> - **Greedy is an $O(\log n)$-approximation algorithm for Set-Cover.** Number of sets chosen $\leq O(\log n) \cdot OPT$.
+
+##### **Matching**
+> [!NOTE]
+> - Given graph $G$, a **matching** $M$ is a subgraph where every vertex has degree at most 1 (no two edges share a vertex). If $(u, v) \in M$, we say $u$ is matched to $v$.
+> - **Maximum matching**: largest possible matching.
+> - **Maximal matching**: a matching where no more edges can be added without making some vertex have degree 2 (i.e., you cannot add any edge without violating the matching property). The greedy algorithm outputs a maximal matching.
+> - **Maximal $\neq$ Maximum**: maximal just means you can't extend it further; maximum is the globally largest.
+> 
+> **Greedy-Matching Algorithm**
+> 
+> ```
+> M = ∅
+> Repeat:
+>     Pick any edge (u, v) such that both u and v are unmatched in M
+>     M = M ∪ {(u, v)}
+> Until every edge has at least one endpoint matched in M
+> ```
+> - Does not try to pick the "best" edge, just any valid unmatched edge. Arbitrary choice suffices.
+> 
+> **Claim: Maximal matching $\geq \frac{1}{2}$ maximum matching (greedy is a 2-approximation)**
+> - Intuition: maximal matching $M$ is forced to be "locally complete" — every edge in $G$ has at least one endpoint in $M$. This means $M$ must touch enough of the graph that it cannot be smaller than half the optimal.
+> - Proof: let $M^*$ be a maximum matching.
+>     - For any edge $(u, v) \in M^*$, since $M$ is maximal, at least one of $u$ or $v$ must already be matched in $M$ (otherwise we could have added $(u,v)$ to $M$, contradicting maximality).
+>     - So $M$ contains at least one vertex from every edge of $M^*$.
+>     - $M$ has $|M|$ edges, each "covered" by at least one vertex of $M$.
+>     - $M$ has $2|M|$ matched vertices total (each edge contributes 2).
+>     - Therefore $2|M| \geq |M|$, i.e., $|M| \geq \frac{|M|}{2}$.
+> - Since $|M^*| = OPT$: $\frac{OPT}{2} \leq |M| \leq OPT$. Greedy is a **2-approximation** for maximum matching.
+> 
+
+##### **Vertex-Cover**
+> [!NOTE]
+> - Problem: given graph $G = (V, E)$ and integer $k$, is there a subset of $k$ (or fewer) vertices such that every edge is incident to at least one vertex in the subset?
+> - Vertex-Cover is NP-Complete.
+> 
+> **Vertex-Cover $\leq_P$ Set-Cover**
+> - Reduction: given $G = (V, E)$, construct Set-Cover instance $(n, \mathcal{S})$:
+>     - $n = |E(G)|$, order edges arbitrarily $e_1, \ldots, e_n$.
+>     - For each vertex $v \in V(G)$, define $S_v = {i : e_i \text{ is incident to } v}$.
+>     - $\mathcal{S}$ is the collection of all such subsets $S_v$.
+> - Intuition: vertex $\Rightarrow$ set, edge $\Rightarrow$ element. A vertex "covers" all its incident edges, so choosing a set of vertices covers a set of elements (edges).
+> - **Claim**: $G$ has a vertex cover of size $k$ iff $(n, \mathcal{S})$ has a set cover of size $k$.
+> - **Consequence**: if we have an $\alpha$-approximation for Set-Cover, we also have an $\alpha$-approximation for Vertex-Cover. So greedy gives $O(\log n)$-approximation for Vertex-Cover.
+> 
+> **Vertex-Cover by Maximal Matching (better: 2-approximation)**
+> - **Claim**: given graph $G$, if $M$ is a maximal matching of $G$, then:
+>     1. The set of vertices matched in $M$ forms a valid vertex cover of $G$.
+>     2. $|M| \leq VC(G) \leq 2|M|$, where $VC(G)$ is the size of the minimum vertex cover.
+> - This gives a **2-approximation algorithm**: compute maximal matching $M$, output all matched vertices.
+> - **Proof of part 1** (matched vertices form a vertex cover):
+>     - Suppose for contradiction some edge $(u, v)$ is not covered, i.e., neither $u$ nor $v$ is matched in $M$.
+>     - But then $(u, v)$ could be added to $M$ without violating the matching property.
+>     - This contradicts $M$ being a maximal matching. So every edge must be covered.
+> - **Proof of part 2** ($|M| \leq VC(G) \leq 2|M|$):
+>     - **Upper bound** $VC(G) \leq 2|M|$: $M$ has $|M|$ edges, contributing $2|M|$ matched vertices. These vertices form a valid vertex cover (by part 1). So minimum vertex cover $\leq 2|M|$.
+>     - **Lower bound** $VC(G) \geq |M|$: each edge in $M$ must be covered by at least one vertex. The edges in $M$ share no vertices (matching property), so each edge in $M$ needs a distinct vertex to cover it. Therefore any vertex cover must have at least $|M|$ vertices.
+>     - Combined: $|M| \leq VC(G) \leq 2|M|$, so the algorithm outputs a cover of size $2|M| \leq 2 \cdot VC(G) = 2 \cdot OPT$.
+> 
+>**Example**: path graph $1 - 2 - 3 - 4 - 5$.
+>  
+>  - Maximal matching (greedy): pick $(1,2)$, then $(3,4)$. $M = {(1,2),(3,4)}$, matched vertices $= {1,2,3,4}$.
+>  - Minimum vertex cover: ${2,4}$ covers all edges. $VC(G) = 2$, $|M| = 2$, $2|M| = 4$. Ratio is 2.
+##### **Subgraph Isomorphism is NP-complete**
+> [!NOTE]
+> - **Problem:** Given graphs $G$ and $H$, does $H$ have a subgraph $H'$ such that $G$ is isomorphic to $H'$?
+> - **Isomorphism recap:** $G_1 \cong G_2$ iff $\exists$ bijection $f: V_1 \to V_2$ with $(u,v) \in E_1 \iff (f(u), f(v)) \in E_2$
+> 
+> **(1) In NP:**
+> - **Certificate:** the subgraph $H' \subseteq H$ + the bijection $f: V(G) \to V(H')$
+> - **Verification (poly time):**
+>     - Check $H' \cong G$ using $f$ (iterate edges of $G$, check $(f(u), f(v)) \in E(H')$, and vice versa)
+>     - Check $H'$ is a subgraph of $H$ by scanning adjacency lists/matrices
+> 
+> **(2) NP-hard: reduce from Independent Set**
+> - **Independent Set instance:** $(\hat{G}, k)$ — does $\hat{G}$ have an IS of size $k$?
+> - **Reduction:** Set $H = \hat{G}$, and let $G$ = graph on $k$ vertices with **no edges**
+> 
+> **Correctness ($\iff$):**
+> - ($\Leftarrow$) YES Subgraph Iso $\Rightarrow$ YES IS: the isomorphic subgraph $H'$ is an edgeless graph on $k$ vertices inside $\hat{G}$, i.e. an independent set of size $k$
+> - ($\Rightarrow$) YES IS $\Rightarrow$ YES Subgraph Iso: any IS of size $k$ in $\hat{G}$ induces an edgeless subgraph $H' \subseteq \hat{G}$ that is isomorphic to $G$
+> - Equivalently (contrapositive): NO Subgraph Iso $\Rightarrow$ NO IS
+> 
+> **Running time:** Building the empty graph on $k \leq |V(\hat{G})|$ vertices is polynomial (else IS is trivial).
+> 
+> > **Why this works:** $G$ being edgeless forces $H'$ to be edgeless too (isomorphism preserves edges). An edgeless induced subset of size $k$ in $H = \hat{G}$ is exactly an independent set of size $k$.
+##### **Half Clique is NP-complete**
+> [!NOTE]
+> - **Problem:** Given undirected $G = (V, E)$ with $|V|$ even, is there a clique of size **exactly** $|V|/2$?
+> 
+> **(1) In NP:**
+> - **Certificate:** subset $S \subseteq V$ with $|S| = |V|/2$
+> - **Verification (poly time):** check every pair in $S$ is connected by an edge
+> 
+> **(2) NP-hard: reduce from Clique**
+> - **Clique instance:** $(\hat{G}, k)$ with $|V(\hat{G})| = n$
+> - **Reduction — build $G$:**
+>     - Start with $\hat{G}$
+>     - **Add $n - k$ new vertices**, all adjacent to each other AND to every vertex of $\hat{G}$
+>     - **Add $k$ isolated vertices** (no edges)
+>     - Total: $n + (n-k) + k = 2n$ vertices, so $|V(G)|/2 = n$
+> 
+> **Correctness ($\iff$):**
+> - ($\Rightarrow$) YES Clique $\Rightarrow$ YES Half Clique: take the $k$-clique in $\hat{G}$ $\cup$ the $n-k$ added connector vertices. They're all pairwise adjacent (connectors are adjacent to everything; the $k$ vertices form a clique), giving a clique of size $n = |V(G)|/2$
+> - ($\Leftarrow$) YES Half Clique $\Rightarrow$ YES Clique: the $n$-clique in $G$ uses at most $n-k$ connector vertices (and zero isolated vertices, since they have no edges), so it must use $\geq k$ vertices from $\hat{G}$, and those $k$ vertices form a clique in $\hat{G}$
+> 
+> **Running time:** Adding $n - k$ connector vertices and $k$ isolated vertices is polynomial.
+> > **Padding trick to remember:** To force the answer size to be exactly $|V|/2$, pad with two types of vertices, connectors that "boost" any small clique up to size $n$, and isolated vertices to inflate $|V|$ so that $|V|/2$ lands on the right number.
+
+**Facts (T/F)**
+- **(a) Any problem in P reduces to 3-SAT: TRUE**
+    - $P \subseteq NP$, and every problem in NP poly-reduces to 3-SAT (3-SAT is NP-complete).
+- **(b) If MST decision (does $G$ have a spanning tree of weight $\leq k$?) is NP-complete, then $P = NP$: TRUE**
+    - MST has a known polynomial algorithm, so this problem is in P. If it's also NP-hard, every NP problem reduces to it and is solvable in poly time $\Rightarrow$ $P = NP$.
+- **(c) 3-SAT might be solvable in poly time: TRUE**
+    - Would hold if $P = NP$ (currently unknown).
+- **(d) Independent Set might not be solvable in poly time: TRUE**
+    - Would hold if $P \neq NP$ (currently unknown).
+- **(e) Some NP-complete problems might be in P while others are not: FALSE**
+    - All NP-complete problems are poly-reducible to each other. If one is in P, all of them are.
+
+**Further Remarks**
+- Other approximation techniques beyond greedy: Linear Programming, Gradient Descent, Randomisation (outputs $\alpha$-approximation with probability $\geq p$).
+- **Hardness of approximation**:
+    - For any $\varepsilon \geq 0$, there is no poly-time $(\sqrt{2} - \varepsilon)$-approximation algorithm for Vertex-Cover unless P=NP.
+    - For any constant $\alpha \geq 1$, there is no poly-time $\alpha$-approximation algorithm for Independent-Set unless P=NP.
+    - Although Vertex-Cover and Independent-Set are structurally almost the same problem (complement), the hardness of approximation is very different.
