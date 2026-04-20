@@ -2293,7 +2293,65 @@ Conversion:
 > $11122 + 00022 = 11144 = W \checkmark$
 > 
 
-**Key takeaways**
+##### **Subgraph Isomorphism is NP-complete**
+> [!NOTE]
+> - **Problem:** Given graphs $G$ and $H$, does $H$ have a subgraph $H'$ such that $G$ is isomorphic to $H'$?
+> - **Isomorphism recap:** $G_1 \cong G_2$ iff $\exists$ bijection $f: V_1 \to V_2$ with $(u,v) \in E_1 \iff (f(u), f(v)) \in E_2$
+> 
+> **(1) In NP:**
+> - **Certificate:** the subgraph $H' \subseteq H$ + the bijection $f: V(G) \to V(H')$
+> - **Verification (poly time):**
+>     - Check $H' \cong G$ using $f$ (iterate edges of $G$, check $(f(u), f(v)) \in E(H')$, and vice versa)
+>     - Check $H'$ is a subgraph of $H$ by scanning adjacency lists/matrices
+> 
+> **(2) NP-hard: reduce from Independent Set**
+> - **Independent Set instance:** $(\hat{G}, k)$ — does $\hat{G}$ have an IS of size $k$?
+> - **Reduction:** Set $H = \hat{G}$, and let $G$ = graph on $k$ vertices with **no edges**
+> 
+> **Correctness ($\iff$):**
+> - ($\Leftarrow$) YES Subgraph Iso $\Rightarrow$ YES IS: the isomorphic subgraph $H'$ is an edgeless graph on $k$ vertices inside $\hat{G}$, i.e. an independent set of size $k$
+> - ($\Rightarrow$) YES IS $\Rightarrow$ YES Subgraph Iso: any IS of size $k$ in $\hat{G}$ induces an edgeless subgraph $H' \subseteq \hat{G}$ that is isomorphic to $G$
+> - Equivalently (contrapositive): NO Subgraph Iso $\Rightarrow$ NO IS
+> 
+> **Running time:** Building the empty graph on $k \leq |V(\hat{G})|$ vertices is polynomial (else IS is trivial).
+> 
+> > **Why this works:** $G$ being edgeless forces $H'$ to be edgeless too (isomorphism preserves edges). An edgeless induced subset of size $k$ in $H = \hat{G}$ is exactly an independent set of size $k$.
+##### **Half Clique is NP-complete**
+> [!NOTE]
+> - **Problem:** Given undirected $G = (V, E)$ with $|V|$ even, is there a clique of size **exactly** $|V|/2$?
+> 
+> **(1) In NP:**
+> - **Certificate:** subset $S \subseteq V$ with $|S| = |V|/2$
+> - **Verification (poly time):** check every pair in $S$ is connected by an edge
+> 
+> **(2) NP-hard: reduce from Clique**
+> - **Clique instance:** $(\hat{G}, k)$ with $|V(\hat{G})| = n$
+> - **Reduction — build $G$:**
+>     - Start with $\hat{G}$
+>     - **Add $n - k$ new vertices**, all adjacent to each other AND to every vertex of $\hat{G}$
+>     - **Add $k$ isolated vertices** (no edges)
+>     - Total: $n + (n-k) + k = 2n$ vertices, so $|V(G)|/2 = n$
+> 
+> **Correctness ($\iff$):**
+> - ($\Rightarrow$) YES Clique $\Rightarrow$ YES Half Clique: take the $k$-clique in $\hat{G}$ $\cup$ the $n-k$ added connector vertices. They're all pairwise adjacent (connectors are adjacent to everything; the $k$ vertices form a clique), giving a clique of size $n = |V(G)|/2$
+> - ($\Leftarrow$) YES Half Clique $\Rightarrow$ YES Clique: the $n$-clique in $G$ uses at most $n-k$ connector vertices (and zero isolated vertices, since they have no edges), so it must use $\geq k$ vertices from $\hat{G}$, and those $k$ vertices form a clique in $\hat{G}$
+> 
+> **Running time:** Adding $n - k$ connector vertices and $k$ isolated vertices is polynomial.
+> > **Padding trick to remember:** To force the answer size to be exactly $|V|/2$, pad with two types of vertices, connectors that "boost" any small clique up to size $n$, and isolated vertices to inflate $|V|$ so that $|V|/2$ lands on the right number.
+
+**Facts (T/F)**
+- **(a) Any problem in P reduces to 3-SAT: TRUE**
+    - $P \subseteq NP$, and every problem in NP poly-reduces to 3-SAT (3-SAT is NP-complete).
+- **(b) If MST decision (does $G$ have a spanning tree of weight $\leq k$?) is NP-complete, then $P = NP$: TRUE**
+    - MST has a known polynomial algorithm, so this problem is in P. If it's also NP-hard, every NP problem reduces to it and is solvable in poly time $\Rightarrow$ $P = NP$.
+- **(c) 3-SAT might be solvable in poly time: TRUE**
+    - Would hold if $P = NP$ (currently unknown).
+- **(d) Independent Set might not be solvable in poly time: TRUE**
+    - Would hold if $P \neq NP$ (currently unknown).
+- **(e) Some NP-complete problems might be in P while others are not: FALSE**
+    - All NP-complete problems are poly-reducible to each other. If one is in P, all of them are.
+
+**Summary**
 - To prove NP-Completeness: (1) show in NP via certificate + poly-time verifier, (2) reduce from known NP-Complete problem with poly-time reduction preserving YES/NO.
 - Transitivity of reductions: if $A \leq_P B$ and $B \leq_P C$, then $A \leq_P C$.
 - Core design challenge in reductions: match the structure of the target problem. When target uses $\geq$ but source needs $=$, create two opposing constraints that squeeze to equality.
@@ -2391,63 +2449,6 @@ Conversion:
 >  
 >  - Maximal matching (greedy): pick $(1,2)$, then $(3,4)$. $M = {(1,2),(3,4)}$, matched vertices $= {1,2,3,4}$.
 >  - Minimum vertex cover: ${2,4}$ covers all edges. $VC(G) = 2$, $|M| = 2$, $2|M| = 4$. Ratio is 2.
-##### **Subgraph Isomorphism is NP-complete**
-> [!NOTE]
-> - **Problem:** Given graphs $G$ and $H$, does $H$ have a subgraph $H'$ such that $G$ is isomorphic to $H'$?
-> - **Isomorphism recap:** $G_1 \cong G_2$ iff $\exists$ bijection $f: V_1 \to V_2$ with $(u,v) \in E_1 \iff (f(u), f(v)) \in E_2$
-> 
-> **(1) In NP:**
-> - **Certificate:** the subgraph $H' \subseteq H$ + the bijection $f: V(G) \to V(H')$
-> - **Verification (poly time):**
->     - Check $H' \cong G$ using $f$ (iterate edges of $G$, check $(f(u), f(v)) \in E(H')$, and vice versa)
->     - Check $H'$ is a subgraph of $H$ by scanning adjacency lists/matrices
-> 
-> **(2) NP-hard: reduce from Independent Set**
-> - **Independent Set instance:** $(\hat{G}, k)$ — does $\hat{G}$ have an IS of size $k$?
-> - **Reduction:** Set $H = \hat{G}$, and let $G$ = graph on $k$ vertices with **no edges**
-> 
-> **Correctness ($\iff$):**
-> - ($\Leftarrow$) YES Subgraph Iso $\Rightarrow$ YES IS: the isomorphic subgraph $H'$ is an edgeless graph on $k$ vertices inside $\hat{G}$, i.e. an independent set of size $k$
-> - ($\Rightarrow$) YES IS $\Rightarrow$ YES Subgraph Iso: any IS of size $k$ in $\hat{G}$ induces an edgeless subgraph $H' \subseteq \hat{G}$ that is isomorphic to $G$
-> - Equivalently (contrapositive): NO Subgraph Iso $\Rightarrow$ NO IS
-> 
-> **Running time:** Building the empty graph on $k \leq |V(\hat{G})|$ vertices is polynomial (else IS is trivial).
-> 
-> > **Why this works:** $G$ being edgeless forces $H'$ to be edgeless too (isomorphism preserves edges). An edgeless induced subset of size $k$ in $H = \hat{G}$ is exactly an independent set of size $k$.
-##### **Half Clique is NP-complete**
-> [!NOTE]
-> - **Problem:** Given undirected $G = (V, E)$ with $|V|$ even, is there a clique of size **exactly** $|V|/2$?
-> 
-> **(1) In NP:**
-> - **Certificate:** subset $S \subseteq V$ with $|S| = |V|/2$
-> - **Verification (poly time):** check every pair in $S$ is connected by an edge
-> 
-> **(2) NP-hard: reduce from Clique**
-> - **Clique instance:** $(\hat{G}, k)$ with $|V(\hat{G})| = n$
-> - **Reduction — build $G$:**
->     - Start with $\hat{G}$
->     - **Add $n - k$ new vertices**, all adjacent to each other AND to every vertex of $\hat{G}$
->     - **Add $k$ isolated vertices** (no edges)
->     - Total: $n + (n-k) + k = 2n$ vertices, so $|V(G)|/2 = n$
-> 
-> **Correctness ($\iff$):**
-> - ($\Rightarrow$) YES Clique $\Rightarrow$ YES Half Clique: take the $k$-clique in $\hat{G}$ $\cup$ the $n-k$ added connector vertices. They're all pairwise adjacent (connectors are adjacent to everything; the $k$ vertices form a clique), giving a clique of size $n = |V(G)|/2$
-> - ($\Leftarrow$) YES Half Clique $\Rightarrow$ YES Clique: the $n$-clique in $G$ uses at most $n-k$ connector vertices (and zero isolated vertices, since they have no edges), so it must use $\geq k$ vertices from $\hat{G}$, and those $k$ vertices form a clique in $\hat{G}$
-> 
-> **Running time:** Adding $n - k$ connector vertices and $k$ isolated vertices is polynomial.
-> > **Padding trick to remember:** To force the answer size to be exactly $|V|/2$, pad with two types of vertices, connectors that "boost" any small clique up to size $n$, and isolated vertices to inflate $|V|$ so that $|V|/2$ lands on the right number.
-
-**Facts (T/F)**
-- **(a) Any problem in P reduces to 3-SAT: TRUE**
-    - $P \subseteq NP$, and every problem in NP poly-reduces to 3-SAT (3-SAT is NP-complete).
-- **(b) If MST decision (does $G$ have a spanning tree of weight $\leq k$?) is NP-complete, then $P = NP$: TRUE**
-    - MST has a known polynomial algorithm, so this problem is in P. If it's also NP-hard, every NP problem reduces to it and is solvable in poly time $\Rightarrow$ $P = NP$.
-- **(c) 3-SAT might be solvable in poly time: TRUE**
-    - Would hold if $P = NP$ (currently unknown).
-- **(d) Independent Set might not be solvable in poly time: TRUE**
-    - Would hold if $P \neq NP$ (currently unknown).
-- **(e) Some NP-complete problems might be in P while others are not: FALSE**
-    - All NP-complete problems are poly-reducible to each other. If one is in P, all of them are.
 
 **Further Remarks**
 - Other approximation techniques beyond greedy: Linear Programming, Gradient Descent, Randomisation (outputs $\alpha$-approximation with probability $\geq p$).
